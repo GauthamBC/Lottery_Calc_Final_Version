@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What's Your Jackpot Really Worth? — VegasInsider</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    /* VegasInsider-style palette based on the supplied reference: black, white, gold, warm orange */
+    --bg:       #f4f4f4;
+    --bg2:      #ffffff;
+    --surface:  #ffffff;
+    --surface2: #f7f7f7;
+    --surface3: #fff4d8;
+    --border:   #e4e4e4;
+    --border2:  #d7d7d7;
+    --ink:      #000000;
+    --muted:    #666d75;
+    --faint:    #8f949a;
+    --black:    #000000;
+    --gold:     #e7aa31;
+    --gold2:    #f4c24c;
+    --gold3:    #f8e7a7;
+    --orange:   #ba6710;
+    --cream:    #fff3d4;
+    --cream2:   #fff8e7;
+    --green:    #248447;
+    --green-dim:rgba(36,132,71,.12);
+    /* aliases used by the existing JS/HTML — mapped to VI gold/orange, not red */
+    --red:      #e7aa31;
+    --red-dark: #ba6710;
+    --red-glow: rgba(231,170,49,.24);
+    --gold-dim: rgba(231,170,49,.18);
+    --pb-red:   #e7aa31;
+    --mm-blue:  #000000;
+    --r:0px;
+    --rs:0px;
+    --shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 0 82px;}
+
+  /* VegasInsider-style top bar */
+  .topbar{
+    position:relative;
+    background:#000;
+    padding:18px 28px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:28px;
+    border-bottom:4px solid var(--gold);
+    box-shadow:0 3px 12px rgba(0,0,0,.14);
+  }
+  .vi-logo{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:-.02em;
+    text-transform:uppercase;
+  }
+  .vi-logo-img{
+    display:block;
+    height:34px;
+    width:auto;
+  }
+  .vi-logo span{
+    display:inline-block;
+    padding-left:12px;
+    border-left:1px solid rgba(255,255,255,.28);
+    color:var(--gold2);
+    font-weight:800;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+  }
+  .top-badge{
+    margin-left:auto;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:10px;
+    font-family:ui-monospace,monospace;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:#f1f1f1;
+    background:linear-gradient(180deg,rgba(231,170,49,.10),rgba(0,0,0,.4));
+    border:1px solid rgba(231,170,49,.55);
+    border-radius:4px;
+    padding:6px 12px;
+    font-weight:900;
+    white-space:nowrap;
+    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 2px 10px rgba(231,170,49,.12);
+  }
+  .top-badge .yr{
+    color:var(--gold2);
+    font-weight:900;
+  }
+  .top-badge .sep{
+    color:rgba(255,255,255,.35);
+    font-weight:700;
+  }
+  .top-badge .dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold2);
+    box-shadow:0 0 0 0 rgba(244,194,76,.6);
+    animation:tbpulse 2.2s ease-out infinite;
+    flex:none;
+  }
+  @keyframes tbpulse{
+    0%{box-shadow:0 0 0 0 rgba(244,194,76,.55);}
+    70%{box-shadow:0 0 0 6px rgba(244,194,76,0);}
+    100%{box-shadow:0 0 0 0 rgba(244,194,76,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .top-badge .dot{animation:none;} }
+
+  .px{padding:0 22px;}
+  .eyebrow{
+    font-size:10px;
+    font-family:ui-monospace,monospace;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin:0 0 8px;
+    font-weight:900;
+  }
+  h1{
+    font-size:clamp(25px,4.5vw,42px);
+    font-weight:900;
+    margin:0 0 8px;
+    letter-spacing:-.035em;
+    line-height:1.04;
+    color:#000;
+    max-width:760px;
+  }
+  .sub{color:var(--muted);font-size:14px;margin:0 0 18px;max-width:720px;}
+
+  .brand-strip{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border:1px solid var(--border2);
+    background:#fff;
+    margin:0 0 18px;
+    box-shadow:var(--shadow);
+  }
+  .brand-strip span,.brand-strip strong{
+    padding:11px 14px;
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    border-right:1px solid var(--border);
+    font-size:10px;
+    font-family:ui-monospace,monospace;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .brand-strip span:last-child{border-right:none;}
+  .brand-strip strong{color:#000;background:var(--gold);font-weight:900;}
+  .brand-strip span{color:#000;font-weight:800;background:#fff;}
+  @media(max-width:620px){.brand-strip{grid-template-columns:1fr}.brand-strip span,.brand-strip strong{border-right:none;border-bottom:1px solid var(--border)}.brand-strip span:last-child{border-bottom:none}}
+
+  /* Cards */
+  .card{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--border2);
+    border-top:5px solid #000;
+    border-radius:var(--r);
+    padding:22px;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+  }
+  .card::before{
+    content:'';
+    position:absolute;
+    top:-5px;left:0;width:32%;height:5px;
+    background:var(--gold);
+  }
+
+  /* Inputs */
+  .sec-label{
+    font-size:10px;
+    font-family:ui-monospace,monospace;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:#000;
+    font-weight:900;
+    margin:0 0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+  label{display:block;font-size:11px;font-weight:900;margin:0 0 6px;color:#000;letter-spacing:.1em;text-transform:uppercase;}
+  input[type=text],select{
+    width:100%;
+    padding:12px 13px;
+    font-size:15px;
+    border:1px solid var(--border2);
+    border-radius:var(--rs);
+    background:#fff;
+    color:#000;
+    font-family:inherit;
+    font-weight:600;
+    transition:border-color .15s,box-shadow .15s,background .15s;
+  }
+  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(231,170,49,.24);background:#fffdf6;}
+  /* ── Money input with always-visible $ prefix ── */
+  .money-input{ position:relative; display:block; }
+  .money-prefix{
+    position:absolute; left:13px; top:50%; transform:translateY(-50%);
+    font-family:inherit; font-size:15px; font-weight:900; color:#101820;
+    pointer-events:none; z-index:1; line-height:1;
+  }
+  .money-input input[type=text]{ padding-left:26px !important; }
+  .money-input input[type=text]:focus + .money-prefix,
+  .money-input:focus-within .money-prefix{ color:var(--an-green-dark,#0a6b48); }
+  .input-hint{
+    margin:6px 0 0; font-size:11.5px; line-height:1.45; color:var(--muted);
+    font-family:"Poppins",sans-serif; font-weight:600;
+  }
+  .input-hint strong{ color:#101820; }
+
+  select option{background:#fff;color:#000;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:500px){.row{grid-template-columns:1fr;}}
+  .field{margin-bottom:14px;}.field:last-child{margin-bottom:0;}
+
+  /* Segmented buttons */
+  .seg{display:flex;gap:0;flex-wrap:wrap;border:1px solid var(--border2);background:#fff;}
+  .seg button{
+    flex:1;
+    min-width:90px;
+    padding:10px 8px;
+    font-family:inherit;
+    font-size:12.5px;
+    border:0;
+    border-right:1px solid var(--border2);
+    background:#fff;
+    cursor:pointer;
+    color:#000;
+    transition:all .12s;
+    font-weight:800;
+  }
+  .seg button:last-child{border-right:0;}
+  .seg button:hover{background:var(--cream2);}
+  .seg button[aria-pressed=true]{background:#000;color:#fff;font-weight:900;box-shadow:inset 0 -4px 0 var(--gold);}
+
+  /* Checkbox */
+  .check{display:flex;align-items:flex-start;gap:9px;cursor:pointer;font-size:13px;}
+  .check input{width:16px;height:16px;margin-top:2px;accent-color:var(--gold);flex:none;}
+  .check .lab{font-weight:800;color:#000;}
+  .check .sub2{display:block;color:var(--muted);font-size:11.5px;margin-top:1px;}
+
+  /* Game tabs */
+  .game-tabs{display:flex;gap:0;border:1px solid var(--border2);overflow:hidden;background:#fff;}
+  .game-tab{
+    flex:1;
+    padding:12px 8px;
+    font-family:inherit;
+    font-size:12.5px;
+    border:none;
+    background:#fff;
+    cursor:pointer;
+    color:#000;
+    font-weight:900;
+    transition:all .12s;
+    border-right:1px solid var(--border2);
+    text-align:center;
+  }
+  .game-tab:last-child{border-right:none;}
+  .game-tab:hover{background:var(--cream2);}
+  .game-tab[aria-pressed=true].pb,
+  .game-tab[aria-pressed=true].mm,
+  .game-tab[aria-pressed=true].other{background:#000;color:#fff;box-shadow:inset 0 -5px 0 var(--gold);}
+  .gt-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;background:var(--gold)!important;}
+  .gt-ratio{display:block;font-size:10px;font-family:ui-monospace,monospace;color:var(--muted);margin-top:2px;font-weight:500;letter-spacing:.03em;}
+  .game-tab[aria-pressed=true] .gt-ratio{color:var(--gold2);}
+
+  /* Payout toggle */
+  .payout-row{display:none;gap:8px;margin-top:12px;}
+  .payout-row.visible{display:flex;}
+  .payout-btn{
+    flex:1;
+    padding:11px 12px;
+    border:1px solid var(--border2);
+    background:#fff;
+    color:#000;
+    font-family:inherit;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .12s;
+    text-align:left;
+  }
+  .payout-btn:hover{border-color:var(--gold);background:var(--cream2);}
+  .payout-btn[aria-pressed=true]{border-color:var(--gold);background:var(--cream);box-shadow:inset 4px 0 0 var(--gold);color:#000;}
+  .payout-btn .pb-title{font-size:13px;font-weight:900;display:block;}
+  .payout-btn .pb-sub{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
+
+  .cash-note{
+    font-size:12px;color:var(--muted);background:var(--cream2);border:1px solid #f0dfad;border-left:5px solid var(--gold);
+    padding:9px 12px;margin-top:10px;line-height:1.5;display:none;
+  }
+  .cash-note.show{display:block;}
+  .cash-note strong{color:var(--orange);}
+
+  /* Hero */
+  .hero{
+    background:var(--cream);
+    border:1px solid #f0dfad;
+    border-left:5px solid var(--gold);
+    border-radius:var(--r);
+    padding:24px 24px;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+  }
+  .hero-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .take-lbl{font-size:10px;font-family:ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#000;margin:0;font-weight:900;}
+  .est-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-family:ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;background:#000;color:#fff;border:1px solid #000;padding:3px 8px;font-weight:900;white-space:nowrap;}
+  .est-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;display:inline-block;}
+  .take-amt{font-size:clamp(38px,7vw,58px);font-weight:900;letter-spacing:-.045em;margin:0;line-height:1;color:var(--orange);}
+  .take-sub{color:#4a4a4a;font-size:13px;margin:6px 0 18px;font-weight:600;}
+  .bar-track{height:24px;overflow:hidden;background:#f5e6ad;display:flex;border:1px solid #efd991;}
+  .b-take{background:#000;}.b-fed{background:var(--gold);}.b-state{background:var(--orange);}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11.5px;color:#555;font-weight:700;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:0;}
+  .eff-row{display:flex;justify-content:space-between;font-size:12.5px;color:#444;margin-top:12px;padding-top:12px;border-top:1px solid #efd991;}
+  .eff-row strong{color:#000;}
+
+  /* Two panels */
+  .panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  @media(max-width:520px){.panels{grid-template-columns:1fr;}}
+  .panel{background:#fff;border:1px solid var(--border2);overflow:hidden;box-shadow:var(--shadow);}
+  .panel-head{padding:11px 15px;font-size:10px;font-family:ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;font-weight:900;display:flex;align-items:center;justify-content:space-between;background:#000;color:#fff;border-bottom:4px solid var(--gold);}
+  .panel-head .badge{font-size:9px;padding:2px 7px;border:1px solid var(--gold);font-weight:900;color:var(--gold2);background:#000;}
+  .panel-body{padding:5px 15px 14px;}
+  .p-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;font-size:13px;border-bottom:1px solid var(--border);}
+  .p-row:last-child{border-bottom:none;}
+  .p-row .lbl{color:#000;font-weight:700;}
+  .p-row .lbl small{display:block;font-size:11px;color:var(--muted);margin-top:1px;font-weight:500;}
+  .p-row .val{font-weight:900;font-family:ui-monospace,monospace;font-size:13px;white-space:nowrap;margin-left:10px;}
+  .val.neg{color:var(--orange);}.val.pos{color:var(--green);}.val.neu{color:#000;}
+  .p-row.tot{border-top:2px solid #000;border-bottom:none;margin-top:2px;padding-top:10px;}
+  .p-row.tot .lbl{font-weight:900;font-size:13.5px;}
+  .p-row.tot .val{font-size:15px;}
+
+  /* Settlement */
+  .settle{padding:14px 16px;font-size:13px;line-height:1.6;margin-bottom:10px;border:1px solid var(--border2);box-shadow:var(--shadow);background:#fff;}
+  .settle.refund{border-left:5px solid var(--green);background:#f2fbf5;}
+  .settle.owe{border-left:5px solid var(--orange);background:var(--cream2);}
+  .settle.even{border-left:5px solid var(--gold);background:var(--cream2);}
+  .settle-head{font-size:13.5px;font-weight:900;margin:0 0 4px;color:#000;}
+  .settle p{margin:0;color:var(--muted);}
+  .settle p strong{color:#000;}
+
+  .state-note{font-size:11.5px;color:#4f4f4f;background:#fff;border:1px solid var(--border2);border-left:5px solid var(--gold);padding:9px 12px;margin-top:10px;font-weight:600;box-shadow:var(--shadow);}
+
+  /* Table section */
+  .section-gap{margin-top:24px;}
+  .collapsible-card{padding:0;overflow:hidden;border-top:6px solid #000;}
+  .withholding-toggle{width:100%;appearance:none;border:0;background:#fff;color:#000;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 20px 18px;cursor:pointer;text-align:left;font-family:inherit;transition:background .15s ease;}
+  .withholding-toggle:hover{background:var(--cream2);}
+  .withholding-title{display:flex;flex-direction:column;gap:8px;min-width:0;}
+  .withholding-kicker{font-size:11px;font-family:ui-monospace,monospace;letter-spacing:.22em;text-transform:uppercase;color:#000;font-weight:900;line-height:1.25;}
+  .withholding-summary{font-size:13px;color:var(--muted);font-weight:600;line-height:1.45;}
+  .toggle-chip{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:#000;color:#fff;border-bottom:4px solid var(--gold);padding:10px 13px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--shadow);}
+  .toggle-icon{font-size:16px;line-height:1;color:var(--gold);transition:transform .18s ease;display:inline-block;margin-top:-2px;}
+  .withholding-toggle[aria-expanded="true"] .toggle-icon{transform:rotate(180deg);}
+  .withholding-panel{display:none;border-top:1px solid var(--border);padding:18px 20px 20px;background:#fff;}
+  .withholding-panel.open{display:block;}
+  .withholding-panel[hidden]{display:none;}
+  .table-filter{width:100%;padding:10px 12px;font-size:13.5px;border:1px solid var(--border2);margin-bottom:10px;font-family:inherit;background:#fff;color:#000;font-weight:600;}
+  .table-filter:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(231,170,49,.24);}
+  .table-filter::placeholder{color:var(--muted);}
+  .tbl-wrap{overflow-x:auto;max-height:none;}
+  table.wht{width:100%;font-size:12px;border-collapse:collapse;background:#fff;}
+  table.wht thead th{background:#000;color:#fff;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 10px;text-align:left;font-weight:900;border-bottom:4px solid var(--gold);}
+  table.wht tbody td{padding:8px 10px;border-bottom:1px solid var(--border);color:#000;font-weight:600;}
+  table.wht tbody tr:nth-child(even){background:#fafafa;}
+  table.wht tbody tr:hover{background:var(--cream2);}
+  table.wht .cur td{background:var(--cream);border-left:5px solid var(--gold);font-weight:900;}
+  table.wht .zero td{color:#727272;}
+  .wp{font-family:ui-monospace,monospace;font-weight:900;}
+  .wp.hi{color:var(--orange);}.wp.mid{color:#9c7418;}.wp.lo{color:var(--green);}.wp.no{color:var(--muted);}
+  .stag{font-size:9.5px;padding:1px 5px;margin-left:4px;font-weight:800;border:1px solid transparent;}
+  .tag-ex{background:#eef8ef;color:var(--green);border-color:#cae6d0;}
+  .tag-sp{background:var(--cream);color:var(--orange);border-color:#efd991;}
+  .tag-lc{background:#f0f0f0;color:#555;border-color:#ddd;}
+
+  footer{font-size:11px;color:var(--muted);margin-top:24px;line-height:1.65;border-top:4px solid #000;padding:15px 16px;background:#fff;box-shadow:var(--shadow);position:relative;}
+  footer::after{content:'VEGAS✓INSIDER';position:absolute;right:16px;bottom:12px;font-size:11px;font-weight:900;color:#000;letter-spacing:-.03em;}
+  footer strong{color:#000;}
+  footer div{padding-right:120px;}
+
+  ::selection{background:var(--gold);color:#000;}
+  ::-webkit-scrollbar{width:11px;height:11px;}
+  ::-webkit-scrollbar-track{background:#eeeeee;}
+  ::-webkit-scrollbar-thumb{background:var(--gold);border:2px solid #eeeeee;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--orange);}
+
+  @media(max-width:560px){
+    .topbar{padding:15px 18px;align-items:flex-start;flex-direction:column;gap:9px;}
+    .top-badge{margin-left:0;}
+    .px{padding:0 14px;}
+    .card,.hero{padding:18px;}
+    .game-tabs{flex-direction:column;}
+    .game-tab{border-right:none;border-bottom:1px solid var(--border2);}
+    .game-tab:last-child{border-bottom:none;}
+    .payout-row{flex-direction:column;}
+    .legend{gap:9px;}
+    .p-row{align-items:flex-start;gap:8px;}
+    .p-row .val{text-align:right;}
+    footer::after{position:static;display:block;margin-top:10px;}
+    footer div{padding-right:0;}
+    .withholding-toggle{align-items:flex-start;flex-direction:column;padding:18px;gap:14px;}
+    .toggle-chip{width:100%;justify-content:center;}
+    .withholding-panel{padding:16px 16px 18px;}
+  }
+
+
+  /* ─────────────────────────────────────────────────────────────
+     VegasInsider data-study shell + ranking panes
+  ───────────────────────────────────────────────────────────── */
+  .wrap{max-width:1120px;}
+  .study-hero-card{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--border2);
+    border-top:7px solid #000;
+    box-shadow:var(--shadow);
+    padding:28px 30px 26px;
+    margin-bottom:18px;
+  }
+  .study-hero-card::before{content:'';position:absolute;top:-7px;left:0;width:32%;height:7px;background:var(--gold);}
+  .study-hero-card h1{font-size:clamp(34px,5.2vw,58px);line-height:.98;margin-bottom:10px;max-width:900px;}
+  .study-hero-card h1 em{font-style:normal;color:var(--orange);}
+  .intro-lede{font-size:19px;color:#000;font-weight:900;margin:0 0 12px;}
+  .intro-copy{max-width:920px;margin:0;color:#3d4650;font-size:15px;font-weight:600;line-height:1.65;}
+  .intro-copy strong{color:#000;font-weight:900;}
+  .study-byline{margin-top:16px;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#000;font-weight:900;border-left:5px solid var(--gold);padding:8px 0 8px 13px;background:var(--cream2);}
+
+  /* ── Intro carousel ── */
+  .intro-carousel{ margin:0 0 18px; }
+  .intro-carousel .study-hero-card.intro-shell{ margin-bottom:0; }
+
+  /* Persistent title stays put; only the track swaps */
+  .intro-track{
+    position:relative;
+    margin-top:14px;
+  }
+  .intro-slide{
+    animation:introFade .28s ease both;
+  }
+  @keyframes introFade{ from{opacity:0;transform:translateX(8px);} to{opacity:1;transform:translateX(0);} }
+
+  /* Equal-height: every slide fills the same locked box.
+     Slides are absolutely stacked; the track height is driven by the
+     tallest slide (measured in JS) so all three share one height. Each
+     slide is a flex column that fills the full height, so its content
+     spreads evenly and never leaves a dead gap at the bottom. */
+  .intro-track{ overflow:hidden; }
+  .intro-track .intro-slide{
+    display:none;
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    flex-direction:column;
+  }
+  .intro-track .intro-slide.active{
+    display:flex;
+    position:relative;
+    flex-direction:column;
+  }
+  /* Push the trailing note/credit to the bottom of the slide */
+  .intro-track .intro-slide > .study-byline,
+  .intro-track .intro-slide > .intro-quote-credit{ margin-top:auto; }
+  /* Comparison rows breathe into the available vertical space */
+  .intro-slide[data-slide="1"] .cmp-rows{ margin:auto 0; }
+
+  /* Comparison bars — white theme */
+  .cmp-rows{ display:grid; gap:12px; }
+  .cmp-row{ display:grid; grid-template-columns:140px 1fr 76px; gap:14px; align-items:center; }
+  .cmp-label{ font-weight:900; font-size:14px; line-height:1.15; color:#101820; }
+  .cmp-track{ height:34px; background:#f1f1f1; border:1px solid var(--border2); position:relative; overflow:hidden; }
+  .cmp-fill{ height:100%; display:flex; align-items:center; padding-left:12px; }
+  .cmp-fill span{ font-weight:900; font-size:13px; color:#0a1410; white-space:nowrap; }
+  .cmp-fill.green{ background:#3ec97e; }
+  .cmp-fill.gold{ background:var(--gold); }
+  .cmp-amt{ font-family:ui-monospace,monospace; font-weight:900; font-size:15px; color:#101820; text-align:right; }
+  @media(max-width:560px){
+    .cmp-row{ grid-template-columns:90px 1fr 62px; gap:8px; }
+    .cmp-label{ font-size:12px; }
+    .cmp-amt{ font-size:13px; }
+  }
+
+  /* Quote panel — white theme */
+  .intro-quote{
+    margin:0 0 6px; padding:0 0 0 16px; border-left:4px solid var(--gold);
+    font-size:18px; line-height:1.7; font-style:italic; font-weight:700;
+    color:#101820;
+  }
+  .intro-quote-credit{
+    display:inline-flex; align-items:center; gap:8px;
+    margin:14px 0 0; padding:8px 12px;
+    font-family:ui-monospace,monospace; font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; font-weight:900; color:#101820;
+    border-left:5px solid var(--gold); background:var(--cream2);
+  }
+
+  /* ── Intro mini-chart (panel 1) ── */
+  .intro-chart{
+    margin:18px 0 0;
+    padding:16px 18px 14px;
+    background:linear-gradient(180deg,#fffdf7 0%,#fff8e7 100%);
+    border:1px solid #f0dfad; border-left:5px solid var(--gold);
+  }
+  .ic-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+  .ic-title{ font-weight:900; font-size:14px; color:#101820; letter-spacing:-.01em; }
+  .ic-tag{
+    font-family:ui-monospace,monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+    font-weight:900; color:#000; background:var(--gold); padding:4px 8px; white-space:nowrap;
+  }
+  .ic-rows{ display:grid; gap:9px; margin-bottom:4px; }
+  .ic-row{ display:grid; grid-template-columns:96px 1fr 46px; gap:12px; align-items:center; }
+  .ic-rlabel{
+    font-family:ui-monospace,monospace; font-size:10.5px; font-weight:900;
+    color:#5e6670; letter-spacing:.01em; white-space:nowrap; text-align:right;
+  }
+  .ic-row.is-mark .ic-rlabel{ color:#101820; }
+  .ic-rtrack{
+    height:18px; background:#f0e6cc; border:1px solid #ecdca8; position:relative; overflow:hidden;
+  }
+  .ic-rfill{
+    position:absolute; left:0; top:0; bottom:0; width:0;
+    background:#101820;
+    transition:width .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .ic-row.is-mark .ic-rfill{ background:var(--gold); }
+  .ic-rpct{
+    font-family:ui-monospace,monospace; font-size:12px; font-weight:900;
+    color:#101820; text-align:left; white-space:nowrap;
+  }
+  .ic-row.is-mark .ic-rpct{ color:var(--orange); }
+  @media(max-width:560px){
+    .ic-row{ grid-template-columns:78px 1fr 40px; gap:8px; }
+    .ic-rlabel{ font-size:9px; }
+    .ic-rpct{ font-size:11px; }
+  }
+  .ic-note{ margin:14px 0 0; font-size:12px; line-height:1.55; color:#4f5960; font-weight:600; }
+  .ic-note strong{ color:#101820; font-weight:900; }
+  @media(max-width:560px){
+    .ic-bars{ gap:6px; height:110px; }
+    .ic-pct{ font-size:9.5px; }
+    .ic-lbl{ font-size:9px; }
+  }
+
+  /* Panel 2 stat strip */
+  .intro-statrow{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px;
+  }
+  .intro-stat{
+    padding:12px 14px; background:#fff; border:1px solid var(--border2);
+    border-top:4px solid var(--gold);
+  }
+  .is-num{
+    display:block; font-family:ui-monospace,monospace; font-weight:900;
+    font-size:21px; color:#101820; line-height:1; margin-bottom:6px;
+  }
+  .is-lbl{ display:block; font-size:11px; line-height:1.4; color:#5e6670; font-weight:600; }
+  @media(max-width:560px){
+    .intro-statrow{ grid-template-columns:1fr; gap:8px; }
+    .is-num{ font-size:18px; }
+  }
+
+  /* Panel 3 feature list */
+  .intro-features{ display:grid; gap:10px; margin:16px 0 0; }
+  .intro-feat{
+    display:grid; grid-template-columns:40px 1fr; gap:12px; align-items:center;
+    padding:11px 13px; background:#fffdf7; border:1px solid #f0dfad; border-left:4px solid var(--gold);
+  }
+  .if-ico{ font-size:22px; line-height:1; text-align:center; }
+  .intro-feat strong{ display:block; font-size:13px; color:#101820; font-weight:900; margin-bottom:2px; }
+  .intro-feat span{ display:block; font-size:11.5px; line-height:1.45; color:#5e6670; font-weight:600; }
+
+  /* Nav controls */
+  .intro-nav{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:14px; }
+  .intro-arrow{
+    appearance:none; border:1px solid var(--border2); background:#fff; color:#101820;
+    width:36px; height:36px; cursor:pointer; font-size:20px; line-height:1; font-weight:900;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .14s ease;
+  }
+  .intro-arrow:hover{ background:#101820; color:#fff; border-color:#101820; }
+  .intro-dots{ display:flex; gap:8px; align-items:center; }
+  .intro-dot{
+    appearance:none; border:0; width:9px; height:9px; border-radius:999px;
+    background:var(--border2); cursor:pointer; padding:0; transition:all .14s ease;
+  }
+  .intro-dot:hover{ background:var(--gold); }
+  .intro-dot.active{ background:var(--gold); width:24px; border-radius:99px; }
+  .study-tabs-main{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 0 16px;position:sticky;top:0;z-index:20;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--border);}
+  .study-tabs-main button{appearance:none;border:1px solid var(--border2);background:#fff;color:#000;padding:13px 12px;font-family:inherit;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:var(--shadow);}
+  .study-tabs-main button:hover{background:var(--cream2);border-color:var(--gold);}
+  .study-tabs-main button.active{background:#000;color:#fff;border-color:#000;border-bottom:5px solid var(--gold);}
+  .study-pane{display:none;animation:fadeIn .18s ease both;}
+  .study-pane.active{display:block;}
+  @keyframes fadeIn{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .tab-note{background:var(--cream2);border:1px solid #efd991;border-left:6px solid var(--gold);padding:12px 14px;margin:0 0 14px;color:#4f4f4f;font-size:12px;font-weight:700;line-height:1.55;}
+  .tab-note strong{color:#000;}
+  .ranking-head{margin-bottom:14px;}
+  .ranking-head h2{font-size:clamp(24px,3.8vw,38px);letter-spacing:-.04em;line-height:1.05;margin:0 0 9px;color:#000;font-weight:900;}
+  .ranking-head p{max-width:870px;margin:0;color:#4c5661;font-size:14px;font-weight:600;line-height:1.65;}
+  .ranking-head p strong{color:#000;font-weight:900;}
+  .rank-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
+  .rank-controls button{border:1px solid var(--border2);background:#fff;color:#000;padding:9px 13px;font-family:inherit;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:var(--shadow);}
+  .rank-controls button.active{background:var(--gold);border-color:var(--gold);color:#000;}
+  .rank-table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--border2);border-top:6px solid #000;box-shadow:var(--shadow);}
+  .rank-table{width:100%;min-width:1060px;border-collapse:collapse;background:#fff;font-size:12px;}
+  .rank-table thead th{background:#000;color:#fff;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:10px 11px;text-align:center;border-bottom:5px solid var(--gold);font-weight:900;white-space:nowrap;}
+  .rank-table tbody td{padding:10px 11px;border-bottom:1px solid var(--border);color:#000;font-weight:700;vertical-align:middle;}
+  .rank-table tbody tr:nth-child(even){background:#fafafa;}
+  .rank-table tbody tr:hover{background:var(--cream2);}
+  .rank-table tbody tr.current td{background:var(--cream);font-weight:900;}
+  .rank-no{font-family:ui-monospace,monospace;color:var(--orange);font-weight:900;width:42px;text-align:center;}
+  .rank-state{font-weight:900;white-space:nowrap;text-align:left;}
+  .money-cell{font-family:ui-monospace,monospace;font-weight:900;white-space:nowrap;text-align:center;}
+  .money-loss{color:var(--orange);}
+  .money-keep{color:var(--green);}
+  .real-value{color:#000;background:var(--gold3);font-weight:900;}
+  .muted-cell{color:#5e6670!important;font-weight:700!important;text-align:center;}
+  .splitbar{display:inline-flex;vertical-align:middle;width:86px;height:8px;margin-left:8px;background:#efefef;overflow:hidden;border:1px solid #e0e0e0;}
+  .splitbar .fed{background:#000;}.splitbar .state{background:var(--gold);}
+  .method-box{background:#fff;border:1px solid var(--border2);border-left:6px solid var(--gold);box-shadow:var(--shadow);padding:14px 16px;margin-top:14px;color:#4e5863;font-size:12px;font-weight:600;line-height:1.65;}
+  /* Ranking sub-tabs */
+  .rank-subtabs{ display:flex; gap:6px; margin:0 0 16px; }
+  .rank-subtab{
+    appearance:none; border:1px solid var(--border2); background:#fff; color:#000;
+    padding:10px 18px; font-family:inherit; font-size:12px; font-weight:900;
+    text-transform:uppercase; letter-spacing:.06em; cursor:pointer;
+  }
+  .rank-subtab:hover{ background:var(--cream2); border-color:var(--gold); }
+  .rank-subtab.active{ background:var(--gold); color:#000; border-color:var(--gold); }
+  .rank-sub{ display:none; animation:fadeIn .18s ease both; }
+  .rank-sub.active{ display:block; }
+  /* Methodology */
+  .method-section{ margin:0 0 18px; }
+  .method-section h3{
+    font-family:inherit; font-size:17px; font-weight:900; color:#101820;
+    margin:0 0 8px; letter-spacing:-.01em;
+  }
+  .method-section p{ margin:0; color:#3d4650; font-size:14px; line-height:1.65; font-weight:500; }
+  .method-section p strong{ color:#000; font-weight:900; }
+  .method-section p em{ font-style:italic; color:#101820; }
+  .method-sources{
+    margin-top:16px; padding:14px 16px; background:var(--cream2);
+    border-left:5px solid var(--gold); font-size:11.5px; line-height:1.6;
+    color:#5e6670; font-weight:600;
+  }
+  .method-sources strong{ color:#000; font-weight:900; }
+  .method-box strong{color:#000;font-weight:900;}
+  @media(max-width:680px){
+    .study-hero-card{padding:22px 18px;}
+    .study-tabs-main{grid-template-columns:1fr;position:relative;top:auto;}
+    .study-tabs-main button{text-align:left;}
+    .rank-controls button{flex:1;}
+  }
+
+
+  /* ── Sortable column headers ── */
+  .rank-table thead th.sortable {
+    cursor:pointer; user-select:none; position:relative; padding-right:26px; padding-left:26px;
+    transition:background .12s;
+  }
+  .rank-table thead th.sortable:hover { background:#2a2a2a; }
+  .rank-table thead th.sortable::after {
+    content:'⇅'; position:absolute; right:8px; top:50%; transform:translateY(-50%);
+    font-size:10px; opacity:.4; font-family:monospace;
+  }
+  .rank-table thead th.sort-asc::after  { content:'↑'; opacity:1; color:var(--gold); }
+  .rank-table thead th.sort-desc::after { content:'↓'; opacity:1; color:var(--gold); }
+  .rank-table thead th.sort-asc,
+  .rank-table thead th.sort-desc { background:#1a1a1a; }
+
+  /* ── Header tooltips — floating, JS driven (Action Network pattern) ── */
+  .rank-table thead th { cursor:default; }
+  .rank-table thead th.sortable { cursor:pointer; }
+  .rank-table thead th[data-tip-active]{
+    background:linear-gradient(180deg,#1a1a1a 0%,#0d0d0d 100%);
+    color:#fff;
+  }
+  .vi-floating-tip{
+    position:fixed; left:0; top:0; z-index:2147483647;
+    max-width:min(280px, calc(100vw - 20px));
+    padding:11px 14px;
+    background:#101010; color:#fff;
+    border:1px solid rgba(231,170,49,.5); border-top:4px solid var(--gold);
+    font-family:"Poppins",sans-serif; font-size:12.5px; line-height:1.5;
+    font-weight:500; letter-spacing:0; text-align:left;
+    box-shadow:0 14px 34px rgba(0,0,0,.45);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transform:translateY(6px);
+    transition:opacity .14s ease, transform .14s ease, visibility .14s ease;
+    white-space:normal;
+  }
+  .vi-floating-tip.is-visible{ opacity:1; visibility:visible; transform:translateY(0); }
+  .vi-floating-tip strong{
+    display:block; margin-bottom:4px; color:var(--gold);
+    font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:900;
+  }
+  .vi-floating-tip:after{
+    content:''; position:absolute; left:var(--arrow-x,24px); bottom:-7px;
+    border-width:7px 7px 0 7px; border-style:solid;
+    border-color:#101010 transparent transparent transparent;
+  }
+  .vi-floating-tip.is-below:after{
+    bottom:auto; top:-7px;
+    border-width:0 7px 7px 7px;
+    border-color:transparent transparent var(--gold) transparent;
+  }
+
+  /* ── Inline bar cells ── */
+  .bar-cell {
+    white-space:nowrap; min-width:160px; transition:background .15s; text-align:left;
+  }
+  .bar-cell .bc-val {
+    font-family:ui-monospace,monospace; font-weight:900;
+    font-size:12px; display:block; margin-bottom:4px;
+  }
+  .bar-wrap {
+    display:flex; align-items:center; gap:5px; height:10px;
+  }
+  .bar-fill {
+    height:10px; min-width:2px; flex-shrink:0;
+    border-radius:0;
+  }
+  /* Tax table — black bar (federal) + gold bar (state) stacked */
+  .bar-fed  { background:#000; }
+  .bar-state{ background:var(--gold); }
+  /* Value table — single gold bar */
+  .bar-val  { background:#000; }
+  /* Plain money cell (no bar) */
+  .money-plain { font-family:ui-monospace,monospace; font-weight:900; font-size:12px; text-align:center; }
+
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="vi-logo"><img class="vi-logo-img" src="data:image/jpeg;base64,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B+tc5rg5pLXA6gg8QVI3LnFQxFhqKaZ47tg0iqR0lwHB36Q4+PUdCjitjy+xC/D1/ZM9x7kn0iqB0buvB3kPHxa9a8brfTo3u38R9KvmP5j8/wB37NlufQ1PPEpFPqO1afmfig2TD72U8m7W1escOh4tH2z/ACD+8hZaatjZC6Z0jRGG7xcTwA59dVwfGl8kv99lrCSIG/Y4GnoYObynn8q+V6J0uNxrxa8fRr5n+Iervd16dMRzLCIiL+hvnhERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQbLNiurkwgyyEu5QHk3Sa88Q5m/9PEO1a0iLlpaFNHPZGMzlq17XxkREXVkREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//Z" alt="VegasInsider"> <span>Data Study</span></div>
+  <div class="top-badge"><span class="dot"></span><span class="yr">2026</span> Tax <span class="sep">+</span> Cost-of-Living Data</div>
+</div>
+
+<div class="wrap px">
+  <div class="intro-carousel" id="introCarousel">
+    <div class="study-hero-card intro-shell">
+      <p class="eyebrow">VegasInsider · Data Study</p>
+      <h1>What's your jackpot <em>really</em> worth?</h1>
+
+      <div class="intro-track" id="introTrack">
+
+        <!-- Panel 1 — original intro -->
+        <div class="intro-slide active" data-slide="0">
+          <p class="intro-lede">It depends where you live in the US.</p>
+          <p class="intro-copy">Win a $200M jackpot in the <strong>UK, Canada or Australia</strong> and you'd keep every penny — they don't tax lottery prizes. In the US you can't: the federal government takes ~37% no matter where you live. And then <strong>your state can pile on more</strong> — nothing in Texas, but millions in New York.</p>
+
+          <div class="intro-chart">
+            <div class="ic-head">
+              <span class="ic-title">Federal tax by prize size</span>
+              <span class="ic-tag">Single filer · 2026 · federal only</span>
+            </div>
+            <div class="ic-rows">
+              <div class="ic-row">
+                <span class="ic-rlabel">Under $5K</span>
+                <span class="ic-rtrack"><span class="ic-rfill" style="width:5%"></span></span>
+                <span class="ic-rpct">~0%</span>
+              </div>
+              <div class="ic-row">
+                <span class="ic-rlabel">$5K – $50K</span>
+                <span class="ic-rtrack"><span class="ic-rfill" style="width:11%"></span></span>
+                <span class="ic-rpct">~4%</span>
+              </div>
+              <div class="ic-row">
+                <span class="ic-rlabel">$50K – $1M</span>
+                <span class="ic-rtrack"><span class="ic-rfill" style="width:68%"></span></span>
+                <span class="ic-rpct">~25%</span>
+              </div>
+              <div class="ic-row is-mark">
+                <span class="ic-rlabel">$1M &amp; up</span>
+                <span class="ic-rtrack"><span class="ic-rfill" style="width:100%"></span></span>
+                <span class="ic-rpct">~37%</span>
+              </div>
+            </div>
+            <p class="ic-note">Approximate <strong>effective federal rate</strong> on the prize (single filer, no other income). Small wins are largely shielded by the standard deduction; the rate climbs through the brackets and, once a prize reaches <strong>$1M+</strong>, sits near the <strong>37% ceiling</strong>. Prizes over <strong>$5,000</strong> also trigger an automatic 24% withholding at payout — and your state tax stacks on top.</p>
+          </div>
+
+          <p class="study-byline">VegasInsider analysis · 2026 tax &amp; cost-of-living data · figures on the $200M lump-sum cash option</p>
+        </div>
+
+        <!-- Panel 2 — comparison bars -->
+        <div class="intro-slide" data-slide="1">
+          <p class="intro-lede">Win almost anywhere else, and you'd keep it all.</p>
+          <p class="intro-copy" style="margin-bottom:16px;">The same <strong>$200M jackpot</strong> (cash value), by where you won it. Abroad you keep 100%. In the US, the federal cut lands before your state takes a cent — and your state decides the rest.</p>
+          <div class="cmp-rows">
+            <div class="cmp-row">
+              <div class="cmp-label">UK / Canada /<br>Australia</div>
+              <div class="cmp-track"><div class="cmp-fill green" style="width:100%"><span>100% kept</span></div></div>
+              <div class="cmp-amt">$96.0M</div>
+            </div>
+            <div class="cmp-row">
+              <div class="cmp-label">US — best state</div>
+              <div class="cmp-track"><div class="cmp-fill gold" style="width:63%"><span>63% kept</span></div></div>
+              <div class="cmp-amt">$60.5M</div>
+            </div>
+            <div class="cmp-row">
+              <div class="cmp-label">US — worst (NYC)</div>
+              <div class="cmp-track"><div class="cmp-fill gold" style="width:49%"><span>49% kept</span></div></div>
+              <div class="cmp-amt">$46.6M</div>
+            </div>
+          </div>
+          <div class="intro-statrow">
+            <div class="intro-stat">
+              <span class="is-num">$35.5M</span>
+              <span class="is-lbl">Federal cut — same in every US state</span>
+            </div>
+            <div class="intro-stat">
+              <span class="is-num">$14.0M</span>
+              <span class="is-lbl">Gap between the best & worst US state</span>
+            </div>
+            <div class="intro-stat">
+              <span class="is-num">$49.4M</span>
+              <span class="is-lbl">What an NYC winner loses that a UK winner keeps</span>
+            </div>
+          </div>
+          <p class="study-byline" style="margin-top:14px;">"US — best state" is any no-tax state (federal only). "US — worst (NYC)" adds New York State + city tax. Being American alone can cost a winner tens of millions a UK or Canadian winner keeps.</p>
+        </div>
+
+        <!-- Panel 3 — why we built it -->
+        <div class="intro-slide" data-slide="2">
+          <p class="intro-lede">Why we built this.</p>
+          <blockquote class="intro-quote">"Every headline screams the annuity total, but almost every winner takes the cash — and then taxes carve it down again. We built this so anyone can see, in seconds, what a real win looks like in their own state, instead of trusting a billboard number that no winner ever actually receives."</blockquote>
+          <p class="intro-quote-credit">VegasInsider Research Desk</p>
+          <div class="intro-features">
+            <div class="intro-feat">
+              <span class="if-ico">🧮</span>
+              <div><strong>Run your own numbers</strong><span>Any prize, any state, lump sum or annuity — see your real take-home instantly.</span></div>
+            </div>
+            <div class="intro-feat">
+              <span class="if-ico">📉</span>
+              <div><strong>See who taxes hardest</strong><span>Every state ranked by how much of the jackpot disappears to tax.</span></div>
+            </div>
+            <div class="intro-feat">
+              <span class="if-ico">🏠</span>
+              <div><strong>Find where it goes furthest</strong><span>Winnings re-ranked by real buying power after local cost of living.</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="intro-nav">
+      <button class="intro-arrow" id="introPrev" aria-label="Previous">‹</button>
+      <div class="intro-dots" id="introDots">
+        <button class="intro-dot active" data-go="0" aria-label="Slide 1"></button>
+        <button class="intro-dot" data-go="1" aria-label="Slide 2"></button>
+        <button class="intro-dot" data-go="2" aria-label="Slide 3"></button>
+      </div>
+      <button class="intro-arrow" id="introNext" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <div class="study-tabs-main" role="tablist" aria-label="Lottery study sections">
+    <button type="button" class="active" data-study-tab="calculator">Calculator</button>
+    <button type="button" data-study-tab="ranking">Ranking</button>
+    <button type="button" data-study-tab="methodology">Methodology</button>
+  </div>
+
+  <div class="study-pane active" id="study-pane-calculator">
+    <div class="tab-note"><strong>Calculator:</strong> Change the jackpot, game, filing status and state to see a custom estimate. The two ranking tabs use the fixed study baseline: a $200M advertised jackpot with the lump-sum cash option.</div>
+
+  <!-- INPUTS -->
+  <div class="card">
+    <p class="sec-label">Your details</p>
+
+    <!-- Game selector -->
+    <div class="field">
+      <label>Game</label>
+      <div class="game-tabs" id="gameTabs">
+        <button class="game-tab pb" data-game="pb" data-gtip="pb" aria-pressed="true">
+          <span><span class="gt-dot" style="background:#e7aa31"></span>Powerball</span>
+          <span class="gt-ratio">Cash option ~48%</span>
+        </button>
+        <button class="game-tab mm" data-game="mm" data-gtip="mm" aria-pressed="false">
+          <span><span class="gt-dot" style="background:#1a6fd4"></span>Mega Millions</span>
+          <span class="gt-ratio">Cash option ~49%</span>
+        </button>
+        <button class="game-tab other" data-game="other" data-gtip="other" aria-pressed="false">
+          <span>Other / Custom</span>
+          <span class="gt-ratio">Enter exact amount</span>
+        </button>
+      </div>
+
+      <!-- Annuity / Lump Sum — only shown for PB & MM -->
+      <div class="payout-row visible" id="payoutRow">
+        <button class="payout-btn" data-payout="lump" aria-pressed="true">
+          <span class="pb-title">💵 Lump sum (cash option)</span>
+          <span class="pb-sub" id="lumpSub">~48% of advertised jackpot, paid today</span>
+        </button>
+        <button class="payout-btn" data-payout="annuity" aria-pressed="false">
+          <span class="pb-title">📅 Annuity</span>
+          <span class="pb-sub" id="annuitySub">29 annual payments, enter per-year amount</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label id="prizeLbl">Advertised jackpot</label>
+      <div class="money-input">
+        <span class="money-prefix">$</span>
+        <input type="text" id="prize" inputmode="numeric" value="200,000,000">
+      </div>
+      <p class="input-hint" id="prizeHint">Example: $200,000,000 — jackpots change every draw, so enter any amount you like.</p>
+      <div class="cash-note" id="cashNote"></div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>State</label>
+        <select id="state"></select>
+      </div>
+      <div class="field">
+        <label>Other annual income</label>
+        <div class="money-input">
+          <span class="money-prefix">$</span>
+          <input type="text" id="income" inputmode="numeric" value="0" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Filing status</label>
+      <div class="seg" id="status">
+        <button data-v="single" aria-pressed="true">Single</button>
+        <button data-v="mfj" aria-pressed="false">Married (joint)</button>
+        <button data-v="hoh" aria-pressed="false">Head of household</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="check">
+        <input type="checkbox" id="age65">
+        <span>
+          <span class="lab">Age 65 or older</span>
+          <span class="sub2">Adds the extra standard deduction ($2,050 single · $1,650/spouse if married)</span>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <p class="take-lbl">Your true take-home</p>
+      <span class="est-badge"><span class="est-dot"></span>Estimate</span>
+    </div>
+    <p class="take-amt" id="takeHome">—</p>
+    <p class="take-sub" id="ofAmt">—</p>
+    <div class="bar-track" id="bars"></div>
+    <div class="legend">
+      <span><i style="background:rgba(255,255,255,.75)"></i>Take-home</span>
+      <span><i style="background:var(--gold)"></i>Federal tax</span>
+      <span><i style="background:var(--orange)"></i>State tax</span>
+    </div>
+    <div class="eff-row"><span>Effective tax rate on winnings</span><span><strong id="effRate">—</strong></span></div>
+  </div>
+
+  <!-- TWO PANELS -->
+  <div class="panels">
+    <div class="panel p-imm">
+      <div class="panel-head"><span>Day one</span><span class="badge">What you receive</span></div>
+      <div class="panel-body" id="immBody"></div>
+    </div>
+    <div class="panel p-final">
+      <div class="panel-head"><span>At tax time</span><span class="badge">True take-home</span></div>
+      <div class="panel-body" id="finalBody"></div>
+    </div>
+  </div>
+
+  <!-- SETTLEMENT -->
+  <div class="settle" id="settle"></div>
+  <div class="state-note" id="stateNote" style="display:none"></div>
+
+  <!-- TABLE -->
+  <div class="section-gap">
+    <div class="card collapsible-card">
+      <button class="withholding-toggle" id="withholdingToggle" type="button" aria-expanded="false" aria-controls="withholdingPanel">
+        <span class="withholding-title">
+          <span class="withholding-kicker">State withholding rates — all states</span>
+          <span class="withholding-summary">Open this section to compare what each state withholds at payout. Your selected state is highlighted in gold.</span>
+        </span>
+        <span class="toggle-chip"><span id="withholdingToggleText">Expand</span><span class="toggle-icon">⌄</span></span>
+      </button>
+      <div class="withholding-panel" id="withholdingPanel" hidden>
+        <p style="font-size:12px;color:var(--muted);margin:0 0 10px;font-weight:600">Amount each state withholds the moment you collect. Your selected state is highlighted in gold.</p>
+        <input class="table-filter" type="text" id="stateFilter" placeholder="Filter states…">
+        <div class="tbl-wrap">
+          <table class="wht">
+            <thead><tr><th>State</th><th>Withholds</th><th>On $50k</th><th>On $1M</th><th>Note</th></tr></thead>
+            <tbody id="whBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+
+  <div class="study-pane" id="study-pane-ranking">
+    <div class="rank-subtabs" role="tablist" aria-label="Ranking views">
+      <button type="button" class="rank-subtab active" data-rank-sub="tax">Highest taxes</button>
+      <button type="button" class="rank-subtab" data-rank-sub="value">Buying power</button>
+    </div>
+
+  <div class="rank-sub active" id="rank-sub-tax">
+    <div class="card">
+      <div class="ranking-head">
+        <p class="sec-label">Ranking 1 · Highest taxes</p>
+        <h2>Where winners lose the most to tax</h2>
+        <p>Every US winner loses a major federal cut. Your state stacks on top — nothing in no-tax states, but millions more in high-tax states. This ranks each state by the total dollar amount lost on the $200M jackpot baseline.</p>
+      </div>
+      <div class="tab-note"><strong>Baseline:</strong> $200M advertised jackpot → estimated 48% lump-sum cash option. Tax calculations use the same 2026 federal/state logic as the calculator tab, so the ranking and calculator stay aligned.</div>
+      <div class="rank-controls" aria-label="Tax ranking sort">
+        <button type="button" class="active" data-tax-sort="most">Most lost first</button>
+        <button type="button" data-tax-sort="least">Least lost first</button>
+      </div>
+      <div class="rank-table-wrap">
+        <table class="rank-table">
+          <thead id="taxThead"><tr>
+  <th data-col="rank">#</th>
+  <th data-col="state" class="sortable">State</th>
+  <th data-col="totalLost" class="sortable sort-desc">Total lost ↓</th>
+  <th data-col="fed" class="sortable">Federal</th>
+  <th data-col="stx" class="sortable">State tax</th>
+  <th data-col="rentYrs" class="sortable">Rent yrs</th>
+  <th data-col="childYrs" class="sortable">Childcare yrs</th>
+  <th data-col="degreeYrs" class="sortable">4-yr degrees</th>
+  <th data-col="salaryYrs" class="sortable">Salary yrs</th>
+</tr></thead>
+          <tbody id="taxRankingBody"></tbody>
+        </table>
+      </div>
+      <div class="method-box"><strong>How to read this:</strong> “Rent years”, “childcare years”, “degrees” and “salary years” translate the money lost to tax into local equivalents using the study data from the ranking file. City/local taxes are not included except where already described in the calculator’s state notes.</div>
+    </div>
+  </div>
+
+  <div class="rank-sub" id="rank-sub-value">
+    <div class="card">
+      <div class="ranking-head">
+        <p class="sec-label">Ranking 2 · Where your money goes furthest</p>
+        <h2>Where your money goes furthest</h2>
+        <p>Lowest tax is not the whole story. A dollar stretches further in some states than others, so this ranking adjusts each state’s after-tax take-home by its cost-of-living index.</p>
+      </div>
+      <div class="tab-note"><strong>Buying power:</strong> after-tax take-home ÷ (state cost-of-living index ÷ 100). This is why no-tax states do not automatically tie — the same cash prize buys more in cheaper states.</div>
+      <div class="rank-controls" aria-label="Value ranking sort">
+        <button type="button" class="active" data-value-sort="best">Goes furthest first</button>
+        <button type="button" data-value-sort="worst">Goes least far first</button>
+      </div>
+      <div class="rank-table-wrap">
+        <table class="rank-table">
+          <thead id="valThead"><tr>
+  <th data-col="rank">#</th>
+  <th data-col="state" class="sortable">State</th>
+  <th data-col="realValue" class="sortable sort-desc">Buying power ↓ ⓘ</th>
+  <th data-col="keep" class="sortable">Take-home</th>
+  <th data-col="col" class="sortable">COL index ⓘ</th>
+  <th data-col="homes" class="sortable">Homes</th>
+  <th data-col="acres" class="sortable">Acres</th>
+  <th data-col="yearsNoWork" class="sortable">Years without working</th>
+  <th data-col="stx" class="sortable">State tax</th>
+</tr></thead>
+          <tbody id="valueRankingBody"></tbody>
+        </table>
+      </div>
+      <div class="method-box"><strong>What this shows:</strong> your take-home translated into real buying power. Homes, acres and years without working use the state-level housing, land and annual-cost figures from the ranking data; results are rounded estimates for editorial comparison.</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="study-pane" id="study-pane-methodology">
+    <div class="card">
+      <div class="ranking-head">
+        <p class="sec-label">Methodology &amp; notes</p>
+        <h2>How we built this</h2>
+        <p>A transparent look at the data and assumptions behind the calculator and rankings — so you can judge the numbers for yourself.</p>
+      </div>
+
+      <div class="method-section">
+        <h3>The tax engine</h3>
+        <p>Every figure in the calculator and both rankings comes from one shared tax engine, so the tool can never contradict itself. We apply <strong>2026 federal income-tax brackets</strong> (IRS Revenue Procedure 2025-32) on top of each state's own <strong>2026 income-tax brackets and standard deductions</strong>, sourced from the Tax Foundation's annual state-by-state report and individual state revenue departments. Tax on winnings is calculated the honest way — we compute your total tax <em>with</em> the prize, subtract the tax you'd owe <em>without</em> it, and the difference is what the win actually costs you. That means a prize stacks on top of any other income you enter, pushing into higher brackets exactly as it would on a real return.</p>
+      </div>
+
+      <div class="method-section">
+        <h3>Advertised jackpot vs. the cash you receive</h3>
+        <p>Headlines quote the full <strong>annuity</strong> — paid out over roughly three decades. Almost every winner instead takes the <strong>lump-sum cash option</strong>, which is only a fraction of that advertised figure (around 48% for Powerball and 49% for Mega Millions, varying slightly each drawing). All study figures are built on the <strong>$200M advertised → $96M cash</strong> baseline, and the federal government's mandatory <strong>24% withholding</strong> on prizes over $5,000 is applied before your final bill is reconciled at tax time.</p>
+      </div>
+
+      <div class="method-section">
+        <h3>Buying power &amp; real-world equivalents</h3>
+        <p>Lowest tax isn't the whole story — a dollar stretches further in some states than others. We adjust each state's after-tax take-home by its <strong>cost-of-living index</strong> (MERIC, US average = 100) to show true buying power. The "homes", "acres" and "years without working" figures translate the money into tangible local terms using state median home prices (Zillow/NAR), land values and median household income (BLS/Census), giving readers an intuitive sense of scale rather than abstract millions.</p>
+      </div>
+
+      <div class="method-section">
+        <h3>What's deliberately left out</h3>
+        <p>To keep comparisons clean and consistent across all 51 jurisdictions, the model excludes <strong>local and city taxes</strong> (for example, New York City adds up to 3.876% on top of state tax), itemized deductions, and individual tax credits. Real outcomes vary with personal circumstances, payout timing and where exactly you live within a state. A handful of states get special handling where the law requires it — California and Washington exempt lottery winnings from state tax, and Mississippi applies a flat special rate.</p>
+      </div>
+
+      <div class="method-box" style="border-left-color:var(--orange);">
+        <strong>Important — this is an estimate, not tax advice.</strong> These figures are produced for editorial and informational purposes to illustrate how lottery taxation works across the US. They are not a substitute for professional guidance. Anyone who actually wins should consult a qualified tax advisor and financial planner before making decisions. Tax laws change frequently, and several 2026 state rates were still being finalised as this was published.
+      </div>
+
+      <div class="method-sources">
+        <strong>Sources:</strong> IRS Revenue Procedure 2025-32 (2026 federal brackets &amp; standard deduction) · Tax Foundation, "State Individual Income Tax Rates &amp; Brackets, 2026" · individual state revenue departments · MERIC Cost of Living Index 2025 · Zillow / NAR median home prices (Q1 2026) · US Bureau of Labor Statistics &amp; Census ACS 2024 median household income. Compiled by the VegasInsider Research Desk.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>How it works:</strong> The lottery withholds a flat 24% federal + your state's top rate immediately when you collect (Day One). In spring you file a tax return and your real tax is calculated on progressive brackets — any gap is settled as a refund or extra payment. <strong>This is an estimate</strong> — local/city taxes (e.g. NYC adds up to 3.876%), itemised deductions and credits are not included. Cash option ratios vary per drawing (~45–50%).
+    <div style="margin-top:6px"><strong>Sources:</strong> IRS Rev. Proc. 2025-32 (TY2026) · Tax Foundation State Brackets 2026 · MERIC Cost of Living Index 2025 · Zillow/NAR median home prices Q1 2026 · BLS/Census ACS 2024 median income. Not tax advice.</div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"fed":{"single":[[0,0.1],[12400,0.12],[50400,0.22],[105700,0.24],[201775,0.32],[256225,0.35],[640600,0.37]],"mfj":[[0,0.1],[24800,0.12],[100800,0.22],[211400,0.24],[403550,0.32],[512450,0.35],[768700,0.37]],"hoh":[[0,0.1],[17700,0.12],[67450,0.22],[105700,0.24],[201775,0.32],[256200,0.35],[640600,0.37]]},"fedStd":{"single":16100,"mfj":32200,"hoh":24150},"fedAge65":{"single":2050,"mfj":1650,"hoh":2050},"fedWithhold":0.24,"states":{"Alabama":{"single":[[0,0.02],[500,0.04],[3000,0.05]],"mfj":[[0,0.02],[1000,0.04],[6000,0.05]],"std":[3000,8500],"special":null,"note":"Local/city taxes NOT included.","wh":0.05},"Alaska":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"Arizona":{"single":[[0,0.025]],"mfj":[[0,0.025]],"std":[8350,16700],"special":null,"note":"No local/city tax.","wh":0.025},"Arkansas":{"single":[[0,0.02],[4600,0.039]],"mfj":[[0,0.02],[4600,0.039]],"std":[2470,4940],"special":null,"note":"3.7% top rate retroactive Jan 1 2026 (Acts 1/2, May 2026).","wh":0.039},"California":{"single":[[0,0.01],[11079,0.02],[26264,0.04],[41452,0.06],[57542,0.08],[72724,0.093],[371479,0.103],[445771,0.113],[742953,0.123],[1000000,0.133]],"mfj":[[0,0.01],[22158,0.02],[52528,0.04],[82904,0.06],[115084,0.08],[145448,0.093],[742958,0.103],[891542,0.113],[1000000,0.123],[1485906,0.133]],"std":[5540,11080],"special":"exempt","note":"CA Lottery winnings EXEMPT from state tax (Gov. Code §8880.68).","wh":0.0},"Colorado":{"single":[[0,0.044]],"mfj":[[0,0.044]],"std":[16100,32200],"special":null,"note":"No local/city tax.","wh":0.044},"Connecticut":{"single":[[0,0.02],[10000,0.045],[50000,0.055],[100000,0.06],[200000,0.065],[250000,0.069],[500000,0.0699]],"mfj":[[0,0.02],[20000,0.045],[100000,0.055],[200000,0.06],[400000,0.065],[500000,0.069],[1000000,0.0699]],"std":[0,0],"special":null,"note":"Tax benefit recapture for high earners. No local/city tax.","wh":0.0699},"Delaware":{"single":[[0,0],[2000,0.022],[5000,0.039],[10000,0.048],[20000,0.052],[25000,0.0555],[60000,0.066]],"mfj":[[0,0],[2000,0.022],[5000,0.039],[10000,0.048],[20000,0.052],[25000,0.0555],[60000,0.066]],"std":[3250,6500],"special":null,"note":"DE does NOT withhold at payout — tax owed at filing.","wh":0.066},"Florida":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"Georgia":{"single":[[0,0.0499]],"mfj":[[0,0.0499]],"std":[12000,24000],"special":null,"note":"Flat 4.99% per HB 463 (May 2026), retroactive Jan 1 2026.","wh":0.0499},"Hawaii":{"single":[[0,0.014],[9600,0.032],[14400,0.055],[19200,0.064],[24000,0.068],[36000,0.072],[48000,0.076],[125000,0.079],[175000,0.0825],[225000,0.09],[275000,0.1],[325000,0.11]],"mfj":[[0,0.014],[19200,0.032],[28800,0.055],[38400,0.064],[48000,0.068],[72000,0.072],[96000,0.076],[250000,0.079],[350000,0.0825],[450000,0.09],[550000,0.1],[650000,0.11]],"std":[4400,8800],"special":null,"note":"12 brackets — most of any state.","wh":0.11},"Idaho":{"single":[[0,0],[4811,0.053]],"mfj":[[0,0],[9622,0.053]],"std":[16100,32200],"special":null,"note":"No local/city tax.","wh":0.053},"Illinois":{"single":[[0,0.0495]],"mfj":[[0,0.0495]],"std":[0,0],"special":null,"note":"Flat rate, no standard deduction.","wh":0.0495},"Indiana":{"single":[[0,0.0295]],"mfj":[[0,0.0295]],"std":[0,0],"special":null,"note":"County income taxes NOT included.","wh":0.0295},"Iowa":{"single":[[0,0.038]],"mfj":[[0,0.038]],"std":[16100,32200],"special":null,"note":"Local school surtaxes NOT included.","wh":0.038},"Kansas":{"single":[[0,0.052],[23000,0.0558]],"mfj":[[0,0.052],[46000,0.0558]],"std":[3605,8240],"special":null,"note":"No local/city tax.","wh":0.0558},"Kentucky":{"single":[[0,0.035]],"mfj":[[0,0.035]],"std":[3360,3360],"special":null,"note":"Local occupational taxes NOT included.","wh":0.035},"Louisiana":{"single":[[0,0.03]],"mfj":[[0,0.03]],"std":[12875,25750],"special":null,"note":"No local/city tax.","wh":0.03},"Maine":{"single":[[0,0.058],[27399,0.0675],[64849,0.0715]],"mfj":[[0,0.058],[27399,0.0675],[64849,0.0715]],"std":[8350,16700],"special":null,"note":"No local/city tax.","wh":0.0715},"Maryland":{"single":[[0,0.02],[1000,0.03],[2000,0.04],[3000,0.0475],[100000,0.05],[125000,0.0525],[150000,0.055],[250000,0.0575],[500000,0.0625],[1000000,0.065]],"mfj":[[0,0.02],[1000,0.03],[2000,0.04],[3000,0.0475],[150000,0.05],[175000,0.0525],[225000,0.055],[300000,0.0575],[600000,0.0625],[1200000,0.065]],"std":[3350,6700],"special":null,"note":"County taxes 2.4–3.2% NOT included. 6.5% bracket above $1M.","wh":0.065},"Massachusetts":{"single":[[0,0.05],[1083150,0.09]],"mfj":[[0,0.05],[1083150,0.09]],"std":[0,0],"special":null,"note":"5% + 4% millionaire surtax above $1,083,150.","wh":0.09},"Michigan":{"single":[[0,0.0425]],"mfj":[[0,0.0425]],"std":[0,0],"special":null,"note":"Some city income taxes NOT included.","wh":0.0425},"Minnesota":{"single":[[0,0.0535],[33310,0.068],[109430,0.0785],[203150,0.0985]],"mfj":[[0,0.0535],[48700,0.068],[193480,0.0785],[337930,0.0985]],"std":[15300,30600],"special":null,"note":"No local/city tax.","wh":0.0985},"Mississippi":{"single":[[0,0],[10000,0.04]],"mfj":[[0,0],[10000,0.04]],"std":[2300,4600],"special":["flat",0.03],"note":"Special 3% withholding on prizes ≥$600 (Code §27-115-43). Verify with MS DOR.","wh":0.03},"Missouri":{"single":[[0,0],[1348,0.02],[2696,0.025],[4044,0.03],[5392,0.035],[6740,0.04],[8088,0.045],[9436,0.047]],"mfj":[[0,0],[1348,0.02],[2696,0.025],[4044,0.03],[5392,0.035],[6740,0.04],[8088,0.045],[9436,0.047]],"std":[16100,32200],"special":null,"note":"KC/St Louis ~1% local tax NOT included.","wh":0.047},"Montana":{"single":[[0,0.047],[47500,0.0565]],"mfj":[[0,0.047],[95000,0.0565]],"std":[16100,32200],"special":null,"note":"No local/city tax.","wh":0.0565},"Nebraska":{"single":[[0,0.0246],[4130,0.0351],[24760,0.0455]],"mfj":[[0,0.0246],[8250,0.0351],[49530,0.0455]],"std":[8850,17700],"special":null,"note":"No local/city tax.","wh":0.0455},"Nevada":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"New Hampshire":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"New Jersey":{"single":[[0,0.014],[20000,0.0175],[35000,0.035],[40000,0.0553],[75000,0.0637],[500000,0.0897],[1000000,0.1075]],"mfj":[[0,0.014],[20000,0.0175],[50000,0.0245],[70000,0.035],[80000,0.0553],[150000,0.0637],[500000,0.0897],[1000000,0.1075]],"std":[0,0],"special":null,"note":"NJ Lottery taxable only above $10,000.","wh":0.1075},"New Mexico":{"single":[[0,0.015],[5500,0.032],[16500,0.043],[33500,0.047],[66500,0.049],[210000,0.059]],"mfj":[[0,0.015],[8000,0.032],[25000,0.043],[50000,0.047],[100000,0.049],[315000,0.059]],"std":[16100,32200],"special":null,"note":"No local/city tax.","wh":0.059},"New York":{"single":[[0,0.039],[8500,0.044],[11700,0.0515],[13900,0.054],[80650,0.059],[215400,0.0685],[1077550,0.0965],[5000000,0.103],[25000000,0.109]],"mfj":[[0,0.039],[17150,0.044],[23600,0.0515],[27900,0.054],[161550,0.059],[323200,0.0685],[2155350,0.0965],[5000000,0.103],[25000000,0.109]],"std":[8000,16050],"special":null,"note":"NYC adds up to 3.876%; Yonkers also adds local tax — NOT included.","wh":0.109},"North Carolina":{"single":[[0,0.0399]],"mfj":[[0,0.0399]],"std":[12750,25500],"special":null,"note":"No local/city tax.","wh":0.0399},"North Dakota":{"single":[[0,0],[48475,0.0195],[244825,0.025]],"mfj":[[0,0],[80975,0.0195],[298075,0.025]],"std":[16100,32200],"special":null,"note":"No local/city tax.","wh":0.025},"Ohio":{"single":[[0,0],[26050,0.0275]],"mfj":[[0,0],[26050,0.0275]],"std":[0,0],"special":null,"note":"Municipal taxes common — NOT included.","wh":0.0275},"Oklahoma":{"single":[[0,0.0025],[1000,0.0075],[2500,0.0175],[3750,0.0275],[4900,0.0375],[7200,0.0475]],"mfj":[[0,0.0025],[2000,0.0075],[5000,0.0175],[7500,0.0275],[9800,0.0375],[14400,0.0475]],"std":[6350,12700],"special":null,"note":"No local/city tax.","wh":0.0475},"Oregon":{"single":[[0,0.0475],[4550,0.0675],[11400,0.0875],[125000,0.099]],"mfj":[[0,0.0475],[9100,0.0675],[22800,0.0875],[250000,0.099]],"std":[2910,5820],"special":null,"note":"Portland metro/Lane Transit local taxes NOT included.","wh":0.099},"Pennsylvania":{"single":[[0,0.0307]],"mfj":[[0,0.0307]],"std":[0,0],"special":null,"note":"Cash prizes taxable since 2016. Local taxes NOT included.","wh":0.0307},"Rhode Island":{"single":[[0,0.0375],[82050,0.0475],[186450,0.0599]],"mfj":[[0,0.0375],[82050,0.0475],[186450,0.0599]],"std":[11200,22400],"special":null,"note":"No local/city tax.","wh":0.0599},"South Carolina":{"single":[[0,0],[3640,0.03],[18230,0.06]],"mfj":[[0,0],[3640,0.03],[18230,0.06]],"std":[8350,16700],"special":null,"note":"Top rate 6.0% through Jun 30 2026; reverts to 6.2% Jul 1 2026.","wh":0.06},"South Dakota":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"Tennessee":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"Texas":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"Utah":{"single":[[0,0.045]],"mfj":[[0,0.045]],"std":[0,0],"special":null,"note":"Std deduction is a 6% credit (minor effect, omitted).","wh":0.045},"Vermont":{"single":[[0,0.0335],[49400,0.066],[119700,0.076],[249700,0.0875]],"mfj":[[0,0.0335],[49400,0.066],[119700,0.076],[249700,0.0875]],"std":[7650,15300],"special":null,"note":"No local/city tax.","wh":0.0875},"Virginia":{"single":[[0,0.02],[3000,0.03],[5000,0.05],[17000,0.0575]],"mfj":[[0,0.02],[3000,0.03],[5000,0.05],[17000,0.0575]],"std":[8750,17500],"special":null,"note":"No local/city tax.","wh":0.0575},"Washington":{"single":[],"mfj":[],"std":[0,0],"special":"exempt","note":"No income tax on lottery winnings (capital gains only).","wh":0.0},"West Virginia":{"single":[[0,0.0222],[10000,0.0296],[25000,0.0333],[40000,0.0444],[60000,0.0482]],"mfj":[[0,0.0222],[10000,0.0296],[25000,0.0333],[40000,0.0444],[60000,0.0482]],"std":[0,0],"special":null,"note":"No local/city tax.","wh":0.0482},"Wisconsin":{"single":[[0,0.035],[15110,0.044],[51950,0.053],[332720,0.0765]],"mfj":[[0,0.035],[15110,0.044],[51950,0.053],[332720,0.0765]],"std":[13960,25840],"special":null,"note":"No local/city tax.","wh":0.0765},"Wyoming":{"single":[],"mfj":[],"std":[0,0],"special":null,"note":"No state income tax.","wh":0.0},"District of Columbia":{"single":[[0,0.04],[10000,0.06],[40000,0.065],[60000,0.085],[250000,0.0925],[500000,0.0975],[1000000,0.1075]],"mfj":[[0,0.04],[10000,0.06],[40000,0.065],[60000,0.085],[250000,0.0925],[500000,0.0975],[1000000,0.1075]],"std":[16100,32200],"special":null,"note":"DC has 7 brackets. No additional local tax beyond DC.","wh":0.1075}}};
+
+const GAMES={pb:{ratio:0.48,payments:29,label:'Powerball'},mm:{ratio:0.49,payments:26,label:'Mega Millions'},other:{ratio:1,payments:null,label:null}};
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+const pct=r=>(r*100).toFixed(2).replace(/\.?0+$/,'')+'%';
+const pctN=(r,d=1)=>(r*100).toFixed(d)+'%';
+const parseNum=s=>{const n=parseFloat(String(s).replace(/[^0-9.]/g,''));return isNaN(n)?0:n;};
+function setPrizeHint(mode){
+  const el=document.getElementById('prizeHint');
+  if(!el)return;
+  if(mode==='annuity'){
+    el.innerHTML='Enter one year\'s payment. Annuity totals are split into rising yearly payments over the game\'s schedule.';
+  } else if(mode==='custom'){
+    el.innerHTML='Enter any prize amount — a scratch win, raffle, casino payout or smaller lottery.';
+  } else {
+    el.innerHTML='Example: $200,000,000 — jackpots change every draw, so enter any amount you like.';
+  }
+}
+const $=id=>document.getElementById(id);
+
+function taxBrk(t,b){
+  if(t<=0||!b||!b.length)return 0;
+  let x=0;
+  for(let i=0;i<b.length;i++){const lo=b[i][0],r=b[i][1],hi=(i+1<b.length)?b[i+1][0]:Infinity;if(t>lo)x+=(Math.min(t,hi)-lo)*r;else break;}
+  return x;
+}
+function getBrk(st,s){const o=DATA.states[st];if(!o||!o.single.length)return[];return s==='mfj'?o.mfj:o.single;}
+function getStd(st,s){const o=DATA.states[st];if(!o)return 0;return s==='mfj'?o.std[1]:o.std[0];}
+function stateTax(st,p,inc,s){
+  const o=DATA.states[st];if(!o)return 0;
+  if(o.special==='exempt')return 0;
+  if(Array.isArray(o.special)&&o.special[0]==='flat')return p*o.special[1];
+  const b=getBrk(st,s);if(!b.length)return 0;
+  const sd=getStd(st,s);
+  return taxBrk(Math.max(0,inc+p-sd),b)-taxBrk(Math.max(0,inc-sd),b);
+}
+function fedTax(p,inc,s,a){
+  const b=DATA.fed[s];let sd=DATA.fedStd[s];if(a)sd+=DATA.fedAge65[s];
+  return taxBrk(Math.max(0,inc+p-sd),b)-taxBrk(Math.max(0,inc-sd),b);
+}
+
+let status='single', game='pb', payout='lump';
+
+// Populate state select
+const stateSel=$('state');
+Object.keys(DATA.states).sort().forEach(st=>{
+  const o=document.createElement('option');o.value=st;o.textContent=st;
+  if(st==='New York')o.selected=true;
+  stateSel.appendChild(o);
+});
+
+function pRow(label,sub,val,cls){
+  return `<div class="p-row"><span class="lbl">${label}${sub?`<small>${sub}</small>`:''}</span><span class="val ${cls||'neu'}">${val}</span></div>`;
+}
+function pTot(label,val,cls){
+  return `<div class="p-row tot"><span class="lbl">${label}</span><span class="val ${cls||'neu'}">${val}</span></div>`;
+}
+
+function buildWhTable(filter){
+  const tbody=$('whBody');tbody.innerHTML='';
+  const cur=stateSel.value;
+  const f=(filter||'').toLowerCase();
+  Object.keys(DATA.states).sort().forEach(st=>{
+    if(f&&!st.toLowerCase().includes(f))return;
+    const o=DATA.states[st];const r=o.wh;
+    let pc='no';if(r>=0.09)pc='hi';else if(r>=0.06)pc='mid';else if(r>0)pc='lo';
+    let tags='';
+    if(o.special==='exempt'||st==='California'||st==='Washington')tags+='<span class="stag tag-ex">Exempt</span>';
+    if(Array.isArray(o.special)&&o.special[0]==='flat')tags+='<span class="stag tag-sp">Special</span>';
+    if(o.note&&o.note.includes('NOT included'))tags+='<span class="stag tag-lc">+local</span>';
+    const tr=document.createElement('tr');
+    tr.className=st===cur?'cur':r===0?'zero':'';
+    tr.innerHTML=`
+      <td>${st}${st===cur?' ◀':''}${tags}</td>
+      <td class="wp ${pc}">${r===0?'None':pct(r)}</td>
+      <td>${r===0?'—':fmt(r*50000)}</td>
+      <td>${r===0?'—':fmt(r*1000000)}</td>
+      <td style="font-size:11px;color:var(--muted)">${o.note.length>72?o.note.slice(0,70)+'…':o.note}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function calc(){
+  const adv=parseNum($('prize').value);
+  const inc=parseNum($('income').value);
+  const a65=$('age65').checked;
+  const st=stateSel.value;
+  const o=DATA.states[st];
+  const g=GAMES[game];
+
+  // Work out taxable amount
+  let taxed;
+  if(game==='other'){
+    taxed=adv;
+  } else if(payout==='lump'){
+    taxed=adv*g.ratio;
+  } else {
+    // annuity — user enters per-year amount directly
+    taxed=adv;
+  }
+
+  // Withholding
+  const fwRate=DATA.fedWithhold, swRate=o?o.wh:0;
+  const fw=taxed>5000?taxed*fwRate:0;
+  const sw=taxed>5000?taxed*swRate:0;
+  const totWh=fw+sw;
+  const dayOne=taxed-totWh;
+
+  // Final tax
+  let fedSd=DATA.fedStd[status];if(a65)fedSd+=DATA.fedAge65[status];
+  const fed=fedTax(taxed,inc,status,a65);
+  const stx=stateTax(st,taxed,inc,status);
+  const totTax=fed+stx;
+  const take=taxed-totTax;
+  const gap=totWh-totTax;
+  const eff=taxed?totTax/taxed:0;
+
+  // Hero
+  $('takeHome').textContent=fmt(take);
+  let sub='of '+fmt(taxed);
+  if(game!=='other'&&payout==='lump') sub+=` cash value (from ${fmt(adv)} advertised)`;
+  else if(game!=='other'&&payout==='annuity') sub+=` per annual payment`;
+  else sub+=` won`;
+  sub+=', after all federal & state tax';
+  $('ofAmt').textContent=sub;
+  $('effRate').textContent=pctN(eff);
+  const p=taxed||1;
+  $('bars').innerHTML=
+    `<span class="b-take" style="width:${Math.max(take,0)/p*100}%"></span>`+
+    `<span class="b-fed" style="width:${fed/p*100}%"></span>`+
+    `<span class="b-state" style="width:${stx/p*100}%"></span>`;
+
+  // Cash note
+  const cn=$('cashNote');
+  if(game!=='other'&&payout==='lump'){
+    cn.className='cash-note show';
+    cn.innerHTML=`${g.label} advertised <strong>${fmt(adv)}</strong> → cash option (${Math.round(g.ratio*100)}%) → <strong>${fmt(taxed)}</strong> received today. All tax calculated on <strong>${fmt(taxed)}</strong>. Actual ratio varies ~45–50% per drawing.`;
+  } else if(game!=='other'&&payout==='annuity'){
+    cn.className='cash-note show';
+    cn.innerHTML=`Annuity mode: enter the <strong>per-year payment</strong> amount. ${g.label} pays over <strong>${g.payments} years</strong>, each payment 5% larger than the last. Tax is owed on each payment separately when received.`;
+  } else {
+    cn.className='cash-note';
+  }
+
+  // Panel 1
+  const lumpLabel=game!=='other'&&payout==='lump'?`${Math.round(g.ratio*100)}% of ${fmt(adv)} advertised`:null;
+  const annuityLabel=game!=='other'&&payout==='annuity'?`Annual payment — ${g.payments}-year schedule`:null;
+  $('immBody').innerHTML=
+    pRow(game!=='other'&&payout==='lump'?'Cash value received':game!=='other'&&payout==='annuity'?'Annual payment':'Prize amount', lumpLabel||annuityLabel, fmt(taxed),'neu')+
+    pRow('Federal withheld',taxed>5000?`Flat ${pctN(fwRate,0)} — IRS rule on prizes over $5,000`:'Prize ≤$5k, no withholding required', fw>0?'−'+fmt(fw):'$0', fw>0?'neg':'neu')+
+    pRow('State withheld',swRate>0?`${pct(swRate)} — ${st} top rate`:'None (this state doesn\'t withhold)', sw>0?'−'+fmt(sw):'$0', sw>0?'neg':'neu')+
+    pTot('Cheque you receive on the day',fmt(dayOne),'pos');
+
+  // Panel 2
+  const stLabel=o&&o.special==='exempt'?'Exempt':o&&Array.isArray(o.special)&&o.special[0]==='flat'?`Flat ${pctN(o.special[1])} rule`:'Progressive brackets';
+  $('finalBody').innerHTML=
+    pRow('Taxable winnings','What tax is calculated on',fmt(taxed),'neu')+
+    pRow('Federal tax',`Progressive brackets · deduction ${fmt(fedSd)}`,'−'+fmt(fed),'neg')+
+    pRow('State tax',`${st} · ${stLabel}`,stx>0?'−'+fmt(stx):'$0',stx>0?'neg':'neu')+
+    pTot('Total tax owed',fmt(totTax),'neg')+
+    pTot('True take-home',fmt(take),'pos');
+
+  // Settlement
+  const settle=$('settle');
+  if(Math.abs(gap)<5){
+    settle.className='settle even';
+    settle.innerHTML=`<div class="settle-head">⚖️ It evens out</div><p>The <strong>${fmt(totWh)}</strong> withheld matches your final tax almost exactly. No surprise at filing.</p>`;
+  } else if(gap>0){
+    settle.className='settle refund';
+    settle.innerHTML=`<div class="settle-head">✅ Refund of ${fmt(gap)} when you file</div><p>Lottery withheld <strong>${fmt(totWh)}</strong> but your real tax is only <strong>${fmt(totTax)}</strong>. You get <strong>${fmt(gap)}</strong> back when you file your return.</p>`;
+  } else {
+    settle.className='settle owe';
+    settle.innerHTML=`<div class="settle-head">⚠️ You owe ${fmt(-gap)} extra at filing</div><p>Only <strong>${fmt(totWh)}</strong> was withheld, but your real tax is <strong>${fmt(totTax)}</strong>. Common when a large jackpot hits the top 37% bracket but only 24% was withheld.</p>`;
+  }
+
+  // State note
+  const nb=$('stateNote');
+  if(o&&o.note){nb.style.display='block';nb.textContent='📌 '+st+': '+o.note;}
+  else nb.style.display='none';
+
+  buildWhTable($('stateFilter').value);
+  if (typeof renderStudyRankings === 'function') renderStudyRankings();
+}
+
+// Game tabs
+$('gameTabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.game-tab');if(!btn)return;
+  game=btn.dataset.game;
+  [...$('gameTabs').querySelectorAll('.game-tab')].forEach(b=>b.setAttribute('aria-pressed',b===btn));
+  const pr=$('payoutRow');
+  const g=GAMES[game];
+  if(game!=='other'){
+    pr.classList.add('visible');
+    $('annuitySub').textContent=`${g.payments} annual payments, enter per-year amount`;
+    $('lumpSub').textContent=`~${Math.round(g.ratio*100)}% of advertised jackpot, paid today`;
+    $('prizeLbl').textContent='Advertised jackpot';
+    setPrizeHint('jackpot');
+  } else {
+    pr.classList.remove('visible');
+    payout='lump';
+    $('prizeLbl').textContent='Amount won';
+    setPrizeHint('custom');
+  }
+  calc();
+});
+
+// Payout toggle
+$('payoutRow').addEventListener('click',e=>{
+  const btn=e.target.closest('.payout-btn');if(!btn)return;
+  payout=btn.dataset.payout;
+  [...$('payoutRow').children].forEach(b=>b.setAttribute('aria-pressed',b===btn));
+  if(payout==='annuity'){
+    $('prizeLbl').textContent='Per-year payment amount';
+    setPrizeHint('annuity');
+  } else {
+    $('prizeLbl').textContent='Advertised jackpot';
+    setPrizeHint('jackpot');
+  }
+  calc();
+});
+
+['prize','income'].forEach(id=>$(id).addEventListener('input',calc));
+$('age65').addEventListener('change',calc);
+stateSel.addEventListener('change',calc);
+$('status').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-v]');if(!b)return;
+  status=b.dataset.v;
+  [...$('status').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  calc();
+});
+$('stateFilter').addEventListener('input',e=>buildWhTable(e.target.value));
+const whToggle=$('withholdingToggle');
+const whPanel=$('withholdingPanel');
+if(whToggle&&whPanel){
+  whToggle.addEventListener('click',()=>{
+    const isOpen=whToggle.getAttribute('aria-expanded')==='true';
+    whToggle.setAttribute('aria-expanded',String(!isOpen));
+    whPanel.hidden=isOpen;
+    whPanel.classList.toggle('open',!isOpen);
+    const txt=$('withholdingToggleText');
+    if(txt)txt.textContent=isOpen?'Expand':'Collapse';
+  });
+}
+['prize','income'].forEach(id=>{
+  const el=$(id);
+  el.addEventListener('blur',()=>{const n=parseNum(el.value);el.value=n?n.toLocaleString('en-US'):'0';});
+});
+
+
+const STUDY_BASE_JACKPOT = 200000000;
+const STUDY_CASH_RATIO = 0.48;
+const STUDY_CASH_VALUE = STUDY_BASE_JACKPOT * STUDY_CASH_RATIO;
+const US_ANNUAL_SPEND = 77000;
+const STUDY_COSTS = {"Alaska":{"income":89740,"home":375000,"rent":15600,"tuition":8200,"childcare":11700,"col":125},"Florida":{"income":77735,"home":395000,"rent":18000,"tuition":6400,"childcare":10600,"col":103},"Texas":{"income":79061,"home":310000,"rent":15600,"tuition":11000,"childcare":9700,"col":93},"California":{"income":101000,"home":809000,"rent":22800,"tuition":14200,"childcare":16500,"col":142},"Tennessee":{"income":72100,"home":330000,"rent":13200,"tuition":11000,"childcare":9200,"col":90},"Washington":{"income":98000,"home":627000,"rent":19200,"tuition":12200,"childcare":14600,"col":114},"South Dakota":{"income":73900,"home":295000,"rent":10800,"tuition":9300,"childcare":7600,"col":92},"Wyoming":{"income":77000,"home":340000,"rent":11400,"tuition":6600,"childcare":11200,"col":92},"New Hampshire":{"income":96000,"home":528000,"rent":17400,"tuition":17200,"childcare":13900,"col":110},"North Dakota":{"income":79000,"home":290000,"rent":10800,"tuition":9300,"childcare":9400,"col":94},"Pennsylvania":{"income":79000,"home":275000,"rent":14400,"tuition":15600,"childcare":11800,"col":102},"Indiana":{"income":72000,"home":245000,"rent":12000,"tuition":10500,"childcare":8900,"col":91},"Ohio":{"income":70000,"home":235000,"rent":12000,"tuition":11200,"childcare":9700,"col":94},"Arizona":{"income":77300,"home":430000,"rent":17400,"tuition":12700,"childcare":11500,"col":108},"Louisiana":{"income":60000,"home":249000,"rent":12600,"tuition":9800,"childcare":7100,"col":91},"Missouri":{"income":71000,"home":258000,"rent":12000,"tuition":9900,"childcare":9200,"col":89},"Colorado":{"income":92900,"home":568000,"rent":19200,"tuition":12000,"childcare":16600,"col":105},"Arkansas":{"income":58700,"home":230000,"rent":10800,"tuition":9400,"childcare":7000,"col":89},"Michigan":{"income":72000,"home":260000,"rent":12600,"tuition":14400,"childcare":10600,"col":91},"Kentucky":{"income":64000,"home":263000,"rent":11400,"tuition":11600,"childcare":8200,"col":93},"Oklahoma":{"income":64000,"home":235000,"rent":11400,"tuition":9500,"childcare":9400,"col":86},"Mississippi":{"income":59100,"home":210000,"rent":11400,"tuition":9200,"childcare":6800,"col":87},"Massachusetts":{"income":113900,"home":686000,"rent":20400,"tuition":14000,"childcare":21000,"col":141},"North Carolina":{"income":72000,"home":340000,"rent":14400,"tuition":7400,"childcare":9500,"col":96},"Kansas":{"income":73000,"home":250000,"rent":11400,"tuition":10000,"childcare":11000,"col":87},"Nebraska":{"income":76000,"home":289000,"rent":11400,"tuition":9500,"childcare":12000,"col":91},"New Mexico":{"income":62000,"home":310000,"rent":12000,"tuition":8000,"childcare":8700,"col":94},"West Virginia":{"income":60000,"home":170000,"rent":10200,"tuition":9300,"childcare":8400,"col":88},"Virginia":{"income":92000,"home":400000,"rent":17400,"tuition":14500,"childcare":14000,"col":100},"Idaho":{"income":76000,"home":470000,"rent":13200,"tuition":8300,"childcare":8500,"col":99},"Illinois":{"income":82000,"home":275000,"rent":14400,"tuition":15200,"childcare":14000,"col":92},"Connecticut":{"income":93000,"home":420000,"rent":17400,"tuition":14400,"childcare":15500,"col":114},"Iowa":{"income":73000,"home":240000,"rent":11400,"tuition":9800,"childcare":10800,"col":90},"South Carolina":{"income":67000,"home":360000,"rent":14400,"tuition":12700,"childcare":9000,"col":96},"Delaware":{"income":82000,"home":390000,"rent":15600,"tuition":13700,"childcare":11500,"col":102},"Montana":{"income":72000,"home":523000,"rent":12000,"tuition":7500,"childcare":9700,"col":103},"Maine":{"income":73000,"home":400000,"rent":13800,"tuition":11800,"childcare":11200,"col":111},"Rhode Island":{"income":89000,"home":507000,"rent":16800,"tuition":13800,"childcare":14500,"col":111},"Wisconsin":{"income":75000,"home":300000,"rent":12600,"tuition":10700,"childcare":12500,"col":95},"Vermont":{"income":81000,"home":420000,"rent":14400,"tuition":18800,"childcare":13000,"col":115},"Georgia":{"income":76000,"home":350000,"rent":15600,"tuition":8000,"childcare":9500,"col":91},"Maryland":{"income":102900,"home":440000,"rent":19200,"tuition":10800,"childcare":15700,"col":116},"Minnesota":{"income":87000,"home":345000,"rent":14400,"tuition":13300,"childcare":16000,"col":94},"Oregon":{"income":81000,"home":515000,"rent":18000,"tuition":12300,"childcare":13900,"col":114},"New Jersey":{"income":104300,"home":589000,"rent":19200,"tuition":15000,"childcare":13000,"col":113},"District of Columbia":{"income":109700,"home":765000,"rent":22800,"tuition":6200,"childcare":24200,"col":141},"New York":{"income":84000,"home":488000,"rent":18000,"tuition":8500,"childcare":15400,"col":125},"Alabama":{"income":62000,"home":230000,"rent":12000,"tuition":11000,"childcare":9000,"col":88},"Hawaii":{"income":97000,"home":850000,"rent":24000,"tuition":12000,"childcare":15000,"col":180},"Nevada":{"income":78000,"home":450000,"rent":17000,"tuition":9000,"childcare":11000,"col":101},"Utah":{"income":90000,"home":550000,"rent":16000,"tuition":9500,"childcare":12000,"col":105}};
+const STUDY_LAND = {"Alaska":3500,"Florida":9000,"Texas":4200,"California":12000,"Tennessee":7000,"Washington":7500,"South Dakota":2800,"Wyoming":1500,"New Hampshire":9000,"North Dakota":2500,"Pennsylvania":8000,"Indiana":7500,"Ohio":7800,"Arizona":4000,"Louisiana":4500,"Missouri":5000,"Colorado":4500,"Arkansas":4000,"Michigan":6000,"Kentucky":6000,"Oklahoma":3500,"Mississippi":4000,"Massachusetts":14000,"North Carolina":8000,"Kansas":3000,"Nebraska":3500,"New Mexico":2000,"West Virginia":5000,"Virginia":9000,"Idaho":4000,"Illinois":9500,"Connecticut":13000,"Iowa":9000,"South Carolina":7000,"Delaware":11000,"Montana":1800,"Maine":4500,"Rhode Island":15000,"Wisconsin":6000,"Vermont":7000,"Georgia":7000,"Maryland":12000,"Minnesota":6000,"Oregon":5000,"New Jersey":16000,"District of Columbia":1000000,"New York":8000,"Alabama":4500,"Hawaii":20000,"Nevada":3000,"Utah":5000};
+// sort state now managed inside render functions
+
+const fmtMillions = n => '$' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+const fmtWhole = n => Math.round(n).toLocaleString('en-US');
+const fmtRate = n => (n * 100).toFixed(2).replace(/\.00$/, '').replace(/0$/, '') + '%';
+
+function studyTaxForState(st) {
+  const fed = fedTax(STUDY_CASH_VALUE, 0, 'single', false);
+  const stx = stateTax(st, STUDY_CASH_VALUE, 0, 'single');
+  const totalLost = fed + stx;
+  const keep = STUDY_CASH_VALUE - totalLost;
+  const topWithholdRate = DATA.states[st] ? DATA.states[st].wh : 0;
+  return {fed, stx, totalLost, keep, topWithholdRate};
+}
+
+function studyRows() {
+  return Object.keys(DATA.states).sort().map(st => {
+    const cost = STUDY_COSTS[st] || {income:75000,home:350000,rent:15000,tuition:11000,childcare:11000,col:100};
+    const tax = studyTaxForState(st);
+    const col = cost.col || 100;
+    const land = STUDY_LAND[st] || 6000;
+    return {
+      state: st,
+      ...cost,
+      land,
+      ...tax,
+      realValue: tax.keep / (col / 100),
+      annualSpend: US_ANNUAL_SPEND * (col / 100),
+      degreeCost: (cost.tuition || 11000) * 4
+    };
+  });
+}
+
+// ── Bar cell helpers ─────────────────────────────────────────────────────
+// rankRatio: 1.0 = top rank (darkest), 0.0 = bottom rank (lightest)
+function rankShade(rankRatio) {
+  // dark gold #e7aa31 → very light cream #fff3d4
+  const r1=231,g1=170,b1=49;   // dark gold
+  const r2=255,g2=243,b2=212;  // light cream
+  const t = 1 - rankRatio;     // invert: top rank = t=0 = dark
+  return `rgb(${Math.round(r1+(r2-r1)*t)},${Math.round(g1+(g2-g1)*t)},${Math.round(b1+(b2-b1)*t)})`;
+}
+
+// Single bar (value table: real value)
+function barCell(val, max, fmtFn, extraCls, rankRatio) {
+  const pct = max > 0 ? Math.round(val / max * 100) : 0;
+  const shade = rankShade(rankRatio !== undefined ? rankRatio : pct / 100);
+  return `<td class="bar-cell ${extraCls||''}" style="background:${shade}">
+    <span class="bc-val">${fmtFn(val)}</span>
+    <span class="bar-wrap"><span class="bar-fill bar-val" style="width:${pct}%"></span></span>
+  </td>`;
+}
+// Single gold bar (tax table: total lost column)
+function taxBarCell(fed, stx, totalLost, maxTotal, rankRatio) {
+  const totalPct = maxTotal > 0 ? Math.round(totalLost / maxTotal * 100) : 0;
+  const shade = rankShade(rankRatio !== undefined ? rankRatio : totalPct / 100);
+  return `<td class="bar-cell money-loss" style="background:${shade}">
+    <span class="bc-val">${fmtMillions(totalLost)}</span>
+    <span class="bar-wrap"><span class="bar-fill bar-val" style="width:${totalPct}%"></span></span>
+  </td>`;
+}
+
+// ── Sort state for tax table ───────────────────────────────────────────────
+let taxSortCol = 'totalLost'; let taxSortDir = -1; // -1=desc, 1=asc
+
+function renderTaxRanking() {
+  const tbody = $('taxRankingBody');
+  if (!tbody) return;
+  const current = stateSel ? stateSel.value : '';
+  const all = studyRows();
+
+  // maxes computed inside rows block below
+
+  // Sort
+  const colFns = {
+    state:(r)=>r.state, totalLost:(r)=>r.totalLost, fed:(r)=>r.fed, stx:(r)=>r.stx,
+    rentYrs:(r)=>r.totalLost/r.rent, childYrs:(r)=>r.totalLost/r.childcare,
+    degreeYrs:(r)=>r.totalLost/r.degreeCost, salaryYrs:(r)=>r.totalLost/r.income
+  };
+  const rows = [...all].sort((a,b)=>{
+    const fn=colFns[taxSortCol]||colFns.totalLost;
+    const av=fn(a),bv=fn(b);
+    return typeof av==='string' ? av.localeCompare(bv)*taxSortDir : (av-bv)*taxSortDir;
+  });
+
+  // Update header sort indicators
+  document.querySelectorAll('#taxThead th').forEach(th=>{
+    th.classList.remove('sort-asc','sort-desc');
+    if(th.dataset.col===taxSortCol) th.classList.add(taxSortDir===-1?'sort-desc':'sort-asc');
+  });
+
+  // pre-compute maxes for bar scaling
+  const maxTotal = Math.max(...all.map(r=>r.totalLost));
+  const maxRent  = Math.max(...all.map(r=>r.totalLost/r.rent));
+  const maxChild = Math.max(...all.map(r=>r.totalLost/r.childcare));
+  const maxDeg   = Math.max(...all.map(r=>r.totalLost/r.degreeCost));
+  const maxSal   = Math.max(...all.map(r=>r.totalLost/r.income));
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const rentYrs=r.totalLost/r.rent, childYrs=r.totalLost/r.childcare;
+    const degYrs=r.totalLost/r.degreeCost, salYrs=r.totalLost/r.income;
+    return `<tr class="${r.state===current?'current':''}">
+      <td class="rank-no">${i+1}</td>
+      <td class="rank-state">${r.state}${r.state===current?' ◀':''}</td>
+      ${taxBarCell(r.fed, r.stx, r.totalLost, maxTotal, taxSortDir===-1 ? 1-i/(rows.length-1) : i/(rows.length-1))}
+      <td class="money-plain">${fmtMillions(r.fed)}</td>
+      <td class="money-plain">${r.stx>0?fmtMillions(r.stx):'$0'}</td>
+      <td class="muted-cell">${fmtWhole(rentYrs)}</td>
+      <td class="muted-cell">${fmtWhole(childYrs)}</td>
+      <td class="muted-cell">${fmtWhole(degYrs)}</td>
+      <td class="muted-cell">${fmtWhole(salYrs)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Sort state for value table ────────────────────────────────────────────
+let valSortCol = 'realValue'; let valSortDir = -1;
+
+function renderValueRanking() {
+  const tbody = $('valueRankingBody');
+  if (!tbody) return;
+  const current = stateSel ? stateSel.value : '';
+  const all = studyRows();
+
+  // maxes computed inside rows block below
+
+  const colFns = {
+    state:(r)=>r.state, realValue:(r)=>r.realValue, keep:(r)=>r.keep, col:(r)=>r.col,
+    homes:(r)=>r.keep/r.home, acres:(r)=>r.keep/r.land,
+    yearsNoWork:(r)=>r.keep/r.annualSpend, stx:(r)=>r.stx
+  };
+  const rows = [...all].sort((a,b)=>{
+    const fn=colFns[valSortCol]||colFns.realValue;
+    const av=fn(a),bv=fn(b);
+    return typeof av==='string' ? av.localeCompare(bv)*valSortDir : (av-bv)*valSortDir;
+  });
+
+  document.querySelectorAll('#valThead th').forEach(th=>{
+    th.classList.remove('sort-asc','sort-desc');
+    if(th.dataset.col===valSortCol) th.classList.add(valSortDir===-1?'sort-desc':'sort-asc');
+  });
+
+  // pre-compute maxes for bar scaling
+  const maxRV    = Math.max(...all.map(r=>r.realValue));
+  const maxKeep  = Math.max(...all.map(r=>r.keep));
+  const maxCOL   = Math.max(...all.map(r=>r.col));
+  const maxHomes = Math.max(...all.map(r=>r.keep/r.home));
+  const maxAcres = Math.max(...all.map(r=>r.keep/r.land));
+  const maxYNW   = Math.max(...all.map(r=>r.keep/r.annualSpend));
+  const maxSTX   = Math.max(...all.map(r=>r.stx));
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const homes=r.keep/r.home, acres=r.keep/r.land, ynw=r.keep/r.annualSpend;
+    return `<tr class="${r.state===current?'current':''}">
+      <td class="rank-no">${i+1}</td>
+      <td class="rank-state">${r.state}${r.state===current?' ◀':''}</td>
+      ${barCell(r.realValue, maxRV, fmtMillions, 'real-value', valSortDir===-1 ? 1-i/(rows.length-1) : i/(rows.length-1))}
+      <td class="money-plain money-keep">${fmtMillions(r.keep)}</td>
+      <td class="muted-cell">${r.col}</td>
+      <td class="muted-cell">${fmtWhole(homes)}</td>
+      <td class="muted-cell">${fmtWhole(acres)}</td>
+      <td class="muted-cell">${fmtWhole(ynw)}</td>
+      <td class="money-plain">${r.stx>0?fmtMillions(r.stx):'$0'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderStudyRankings() {
+  renderTaxRanking();
+  renderValueRanking();
+}
+
+function initStudyTabs() {
+  // Main tab switching
+  document.querySelectorAll('[data-study-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.studyTab;
+      document.querySelectorAll('[data-study-tab]').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('.study-pane').forEach(p => p.classList.toggle('active', p.id === 'study-pane-' + target));
+    });
+  });
+
+  // Legacy sort buttons (still wired for UX, now delegate to column sort)
+  document.querySelectorAll('[data-tax-sort]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      taxSortCol = 'totalLost';
+      taxSortDir = btn.dataset.taxSort === 'most' ? -1 : 1;
+      document.querySelectorAll('[data-tax-sort]').forEach(b => b.classList.toggle('active', b === btn));
+      renderTaxRanking();
+    });
+  });
+  document.querySelectorAll('[data-value-sort]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      valSortCol = 'realValue';
+      valSortDir = btn.dataset.valueSort === 'best' ? -1 : 1;
+      document.querySelectorAll('[data-value-sort]').forEach(b => b.classList.toggle('active', b === btn));
+      renderValueRanking();
+    });
+  });
+
+  // ── Column-click sorting ──
+  document.addEventListener('click', e => {
+    const th = e.target.closest('th.sortable');
+    if (!th) return;
+    const col = th.dataset.col;
+    const inTax = !!th.closest('#taxThead');
+    const inVal = !!th.closest('#valThead');
+    if (inTax) {
+      if (taxSortCol === col) taxSortDir *= -1;
+      else { taxSortCol = col; taxSortDir = -1; }
+      renderTaxRanking();
+    } else if (inVal) {
+      if (valSortCol === col) valSortDir *= -1;
+      else { valSortCol = col; valSortDir = -1; }
+      renderValueRanking();
+    }
+  });
+
+  // Ranking sub-tabs (Highest taxes / Buying power)
+  document.querySelectorAll('[data-rank-sub]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.rankSub;
+      document.querySelectorAll('[data-rank-sub]').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('.rank-sub').forEach(p => p.classList.toggle('active', p.id === 'rank-sub-' + t));
+      // re-render to ensure bars/heights compute when shown
+      if(t === 'tax') renderTaxRanking(); else renderValueRanking();
+    });
+  });
+}
+
+initStudyTabs();
+
+calc();
+renderStudyRankings();
+
+// ── Column header tooltips ─────────────────────────────────────────────────
+const COL_TIPS = {
+  // Tax table
+  'totalLost':  { title:'Total tax lost',      body:'Every dollar lost to tax — federal + state combined — on the $96M cash value. The primary ranking column.' },
+  'fed':        { title:'Federal tax',          body:'Federal income tax alone. Roughly $35.5M for everyone — this never changes by state.' },
+  'stx':        { title:'State tax',            body:'State income tax on top of federal. Zero in states with no income tax (TX, FL, NV, SD, WY, TN, AK, NH, WA).' },
+  'rentYrs':    { title:'Rent years',           body:'How many years of median local rent that tax bill equals. Puts the dollar loss into everyday perspective.' },
+  'childYrs':   { title:'Childcare years',      body:'How many years of full-time childcare (local median cost) the tax bill could have covered.' },
+  'degreeYrs':  { title:'4-year degrees',       body:'How many 4-year college degrees (local public university tuition) the tax bill could have funded.' },
+  'salaryYrs':  { title:'Salary years',         body:'How many years of the local median annual salary the tax bill equals.' },
+  // Value table
+  'realValue':  { title:'Buying power',         body:'Your take-home divided by the local cost of living. The same $60M goes much further in Mississippi than in Hawaii — this shows what it is really worth.' },
+  'keep':       { title:'Take-home',            body:'After-tax cash you actually keep. Before adjusting for local cost of living.' },
+  'col':        { title:'Cost of living index', body:'MERIC index (US average = 100). Below 100 = cheaper than average. Above 100 = more expensive.' },
+  'homes':      { title:'Homes',                body:'How many state-median-priced homes you could buy outright with your take-home cash.' },
+  'acres':      { title:'Acres of land',        body:'How many acres of land (at state median price per acre) your take-home cash could buy.' },
+  'yearsNoWork':{ title:'Years without working',body:'How many years you could live without any income, spending at the local cost-of-living-adjusted rate.' },
+  // Shared
+  'state':      { title:'State',                body:'Click any column header to sort the table by that column. Click again to reverse the order.' },
+};
+
+const GAME_TIPS = {
+  'pb':    { title:'Powerball cash option', body:'Powerball advertises the full annuity (30 payments over 29 years). Almost every winner takes the lump sum instead — about 48% of the advertised figure, paid at once. We use that 48% as the starting cash value.' },
+  'mm':    { title:'Mega Millions cash option', body:'Mega Millions also advertises the annuity total. The lump sum most winners choose is roughly 49% of that figure, paid in one go. We use that 49% as the starting cash value.' },
+  'other': { title:'Other / Custom prize', body:'Enter any exact amount yourself — a scratch-off, raffle, casino payout or a smaller lottery. No cash-option ratio is applied; the number you type is taxed as-is.' },
+};
+
+function setupColumnTooltips() {
+  // Create the floating tip element fresh (no dependency on pre-existing DOM)
+  let tip = document.querySelector('.vi-floating-tip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.className = 'vi-floating-tip';
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+  }
+
+  let activeTh = null;
+
+  function position(th) {
+    if (!tip || !th) return;
+    const rect = th.getBoundingClientRect();
+    const tr = tip.getBoundingClientRect();
+    const gap = 10, margin = 8;
+    let left = rect.left + rect.width / 2 - tr.width / 2;
+    let top = rect.top - tr.height - gap;
+    tip.classList.remove('is-below');
+    if (top < margin) {
+      top = rect.bottom + gap;
+      tip.classList.add('is-below');
+    }
+    left = Math.max(margin, Math.min(left, window.innerWidth - tr.width - margin));
+    const arrowX = rect.left + rect.width / 2 - left;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.setProperty('--arrow-x', Math.max(14, Math.min(arrowX, tr.width - 14)) + 'px');
+  }
+
+  function show(th) {
+    const col = th.dataset.col;
+    const info = COL_TIPS[col];
+    if (!info) return;
+    activeTh = th;
+    th.setAttribute('data-tip-active', '1');
+    tip.innerHTML = '<strong>' + info.title + '</strong>' + info.body;
+    tip.classList.add('is-visible');
+    position(th);
+  }
+
+  function hide(th) {
+    if (th) th.removeAttribute('data-tip-active');
+    activeTh = null;
+    tip.classList.remove('is-visible');
+  }
+
+  document.querySelectorAll('.rank-table thead th[data-col]').forEach(th => {
+    if (!COL_TIPS[th.dataset.col]) return;
+    th.addEventListener('mouseenter', () => show(th));
+    th.addEventListener('mouseleave', () => hide(th));
+    th.addEventListener('focus', () => show(th));
+    th.addEventListener('blur', () => hide(th));
+  });
+
+  // Game tabs use the same floating tooltip, keyed by data-gtip → GAME_TIPS
+  function showGame(el){
+    const info = GAME_TIPS[el.dataset.gtip];
+    if(!info) return;
+    activeTh = el;
+    el.setAttribute('data-tip-active','1');
+    tip.innerHTML = '<strong>' + info.title + '</strong>' + info.body;
+    tip.classList.add('is-visible');
+    position(el);
+  }
+  document.querySelectorAll('.game-tab[data-gtip]').forEach(el => {
+    el.addEventListener('mouseenter', () => showGame(el));
+    el.addEventListener('mouseleave', () => hide(el));
+    el.addEventListener('focus', () => showGame(el));
+    el.addEventListener('blur', () => hide(el));
+  });
+
+  window.addEventListener('scroll', () => { if (activeTh) position(activeTh); }, { passive: true });
+  window.addEventListener('resize', () => { if (activeTh) position(activeTh); });
+}
+
+
+
+
+
+// ── Intro carousel (user-controlled, no autoplay, equal height) ────────────
+function setupIntroCarousel(){
+  const track  = document.getElementById('introTrack');
+  const slides = Array.from(document.querySelectorAll('.intro-slide'));
+  const dots   = Array.from(document.querySelectorAll('.intro-dot'));
+  const prev   = document.getElementById('introPrev');
+  const next   = document.getElementById('introNext');
+  if(!track || !slides.length) return;
+  let idx = 0;
+
+  function lockHeight(){
+    // Measure each slide's natural content height one at a time, off-screen,
+    // without disturbing which slide is visibly active.
+    track.style.height = 'auto';
+    let max = 0;
+    slides.forEach(s=>{
+      // snapshot
+      const prev = {
+        position:s.style.position, height:s.style.height,
+        display:s.style.display, visibility:s.style.visibility,
+        left:s.style.left, top:s.style.top
+      };
+      // make measurable but invisible & out of flow
+      s.style.position='absolute';
+      s.style.left='-99999px';
+      s.style.top='0';
+      s.style.height='auto';
+      s.style.display='flex';
+      s.style.visibility='hidden';
+      max = Math.max(max, s.scrollHeight);
+      // restore
+      s.style.position=prev.position;
+      s.style.left=prev.left;
+      s.style.top=prev.top;
+      s.style.height=prev.height;
+      s.style.display=prev.display;
+      s.style.visibility=prev.visibility;
+    });
+    // ensure only the active slide is showing
+    slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    if(max > 0) track.style.height = max + 'px';
+  }
+
+  function go(n){
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+  }
+
+  if(prev) prev.addEventListener('click', ()=>go(idx-1));
+  if(next) next.addEventListener('click', ()=>go(idx+1));
+  dots.forEach(d=>d.addEventListener('click', ()=>go(parseInt(d.dataset.go,10))));
+
+  // Lock equal height after layout + fonts, and on resize.
+  go(0);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(lockHeight); }
+  setTimeout(lockHeight, 60);
+  window.addEventListener('resize', ()=>{ setTimeout(lockHeight, 50); });
+}
+setupIntroCarousel();
+setupColumnTooltips();
+</script>
+</body>
+</html>
