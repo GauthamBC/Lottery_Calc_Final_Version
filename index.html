@@ -559,6 +559,15 @@
   .tabs-hint{margin:-6px 0 16px;font-size:12.5px;line-height:1.5;color:#5e6670;font-weight:600;}
   .tabs-hint-link{appearance:none;border:0;background:none;padding:0;margin:0;font:inherit;font-weight:900;color:var(--orange);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
   .tabs-hint-link:hover{color:#000;}
+  .calc-intro{margin:0 0 14px;font-size:13px;font-weight:700;color:#4f5660;display:flex;align-items:center;gap:8px;}
+  .info-dot{
+    appearance:none;border:0;cursor:help;width:17px;height:17px;flex:0 0 auto;
+    border-radius:999px;background:var(--gold);color:#000;font-family:Georgia,serif;
+    font-size:11px;font-weight:700;font-style:italic;line-height:17px;text-align:center;
+    padding:0;vertical-align:middle;transition:background .14s;
+  }
+  .info-dot:hover{background:var(--orange);color:#fff;}
+  h2 .info-dot{margin-left:8px;transform:translateY(-3px);}
   .study-pane{display:none;animation:fadeIn .18s ease both;}
   .study-pane.active{display:block;}
   @keyframes fadeIn{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
@@ -716,7 +725,7 @@
         <!-- Panel 1 — original intro -->
         <div class="intro-slide active" data-slide="0">
           <p class="intro-lede">It depends where you live in the US.</p>
-          <p class="intro-copy">Win a $200M jackpot in the <strong>UK, Canada or Australia</strong> and you'd keep every penny — they don't tax lottery prizes. In the US you can't: the federal government takes ~37% no matter where you live. And then <strong>your state can pile on more</strong> — nothing in Texas, but millions in New York.</p>
+          <p class="intro-copy">Win in the <strong>UK, Canada or Australia</strong> and you keep every penny. In the US, the federal government takes ~37% — and <strong>your state can pile on more</strong>: nothing in Texas, millions in New York.</p>
 
           <div class="intro-chart">
             <div class="ic-head">
@@ -726,7 +735,7 @@
             <div class="ic-rows">
               <div class="ic-row">
                 <span class="ic-rlabel">Under $5K</span>
-                <span class="ic-rtrack"><span class="ic-rfill" style="width:5%"></span></span>
+                <span class="ic-rtrack"><span class="ic-rfill" style="width:0%"></span></span>
                 <span class="ic-rpct">~0%</span>
               </div>
               <div class="ic-row">
@@ -745,7 +754,7 @@
                 <span class="ic-rpct">~37%</span>
               </div>
             </div>
-            <p class="ic-note">Approximate <strong>effective federal rate</strong> on the prize (single filer, no other income). Small wins are largely shielded by the standard deduction; the rate climbs through the brackets and, once a prize reaches <strong>$1M+</strong>, sits near the <strong>37% ceiling</strong>. Prizes over <strong>$5,000</strong> also trigger an automatic 24% withholding at payout — and your state tax stacks on top.</p>
+            <p class="ic-note">Bigger prizes climb toward the <strong>37% federal ceiling</strong> — and your state tax stacks on top.</p>
           </div>
 
           <p class="study-byline">VegasInsider analysis · 2026 tax &amp; cost-of-living data · figures on the $200M lump-sum cash option</p>
@@ -754,7 +763,7 @@
         <!-- Panel 2 — comparison bars -->
         <div class="intro-slide" data-slide="1">
           <p class="intro-lede">Win almost anywhere else, and you'd keep it all.</p>
-          <p class="intro-copy" style="margin-bottom:16px;">The same <strong>$200M jackpot</strong> (cash value), by where you won it. Abroad you keep 100%. In the US, the federal cut lands before your state takes a cent — and your state decides the rest.</p>
+          <p class="intro-copy" style="margin-bottom:16px;">The same <strong>$200M jackpot</strong> (cash value), by where you won it.</p>
           <div class="cmp-rows">
             <div class="cmp-row">
               <div class="cmp-label">UK / Canada /<br>Australia</div>
@@ -833,7 +842,7 @@
   <p class="tabs-hint" id="tabsHint"></p>
 
   <div class="study-pane" id="study-pane-calculator">
-    <div class="tab-note"><strong>Calculator:</strong> Change the jackpot, game, filing status and state to see a custom estimate. The two ranking tabs use the fixed study baseline: a $200M advertised jackpot with the lump-sum cash option.</div>
+    <p class="calc-intro">Enter your numbers for a custom estimate. <button type="button" class="info-dot" data-info="calc" aria-label="About the calculator">i</button></p>
 
   <!-- INPUTS -->
   <div class="card">
@@ -983,10 +992,9 @@
     <div class="card">
       <div class="ranking-head">
         <p class="sec-label">Ranking 1 · Highest taxes</p>
-        <h2>Where winners lose the most to tax</h2>
-        <p>Every US winner loses a major federal cut. Your state stacks on top — nothing in no-tax states, but millions more in high-tax states. This ranks each state by the total dollar amount lost on the $200M jackpot baseline.</p>
+        <h2>Where winners lose the most to tax <button type="button" class="info-dot" data-info="tax-rank" aria-label="About this ranking">i</button></h2>
+        <p>Each state ranked by total tax lost on a $200M jackpot.</p>
       </div>
-      <div class="tab-note"><strong>Baseline:</strong> $200M advertised jackpot → estimated 48% lump-sum cash option. Tax calculations use the same 2026 federal/state logic as the calculator tab, so the ranking and calculator stay aligned.</div>
       <div class="rank-controls" aria-label="Tax ranking sort">
         <button type="button" class="active" data-tax-sort="most">Most lost first</button>
         <button type="button" data-tax-sort="least">Least lost first</button>
@@ -1007,7 +1015,6 @@
           <tbody id="taxRankingBody"></tbody>
         </table>
       </div>
-      <div class="method-box"><strong>How to read this:</strong> “Rent years”, “childcare years”, “degrees” and “salary years” translate the money lost to tax into local equivalents using the study data from the ranking file. City/local taxes are not included except where already described in the calculator’s state notes.</div>
     </div>
   </div>
 
@@ -1015,10 +1022,9 @@
     <div class="card">
       <div class="ranking-head">
         <p class="sec-label">Ranking 2 · Where your money goes furthest</p>
-        <h2>Where your money goes furthest</h2>
-        <p>Lowest tax is not the whole story. A dollar stretches further in some states than others, so this ranking adjusts each state’s after-tax take-home by its cost-of-living index.</p>
+        <h2>Where your money goes furthest <button type="button" class="info-dot" data-info="value-rank" aria-label="About this ranking">i</button></h2>
+        <p>Take-home re-ranked by local cost of living.</p>
       </div>
-      <div class="tab-note"><strong>Buying power:</strong> after-tax take-home ÷ (state cost-of-living index ÷ 100). This is why no-tax states do not automatically tie — the same cash prize buys more in cheaper states.</div>
       <div class="rank-controls" aria-label="Value ranking sort">
         <button type="button" class="active" data-value-sort="best">Goes furthest first</button>
         <button type="button" data-value-sort="worst">Goes least far first</button>
@@ -1039,7 +1045,6 @@
           <tbody id="valueRankingBody"></tbody>
         </table>
       </div>
-      <div class="method-box"><strong>What this shows:</strong> your take-home translated into real buying power. Homes, acres and years without working use the state-level housing, land and annual-cost figures from the ranking data; results are rounded estimates for editorial comparison.</div>
     </div>
   </div>
   </div>
@@ -1635,6 +1640,12 @@ const GAME_TIPS = {
   'other': { title:'Other / Custom prize', body:'Enter any exact amount yourself — a scratch-off, raffle, casino payout or a smaller lottery. No cash-option ratio is applied; the number you type is taxed as-is.' },
 };
 
+const INFO_TIPS = {
+  'calc':       { title:'Calculator', body:'Change the jackpot, game, filing status and state for a custom estimate. The rankings use a fixed $200M / lump-sum baseline so they stay comparable.' },
+  'tax-rank':   { title:'Highest taxes', body:'Based on a $200M advertised jackpot taken as the ~48% lump-sum cash option, using the same 2026 federal + state tax logic as the calculator. Rent, childcare, degree and salary columns translate the tax loss into local equivalents. City/local taxes excluded.' },
+  'value-rank': { title:'Buying power', body:'After-tax take-home ÷ (state cost-of-living index ÷ 100). This is why no-tax states do not automatically tie — the same prize buys more in cheaper states. Homes, acres and years are rounded editorial estimates.' },
+};
+
 function setupColumnTooltips() {
   // Create the floating tip element fresh (no dependency on pre-existing DOM)
   let tip = document.querySelector('.vi-floating-tip');
@@ -1705,6 +1716,24 @@ function setupColumnTooltips() {
     el.addEventListener('mouseenter', () => showGame(el));
     el.addEventListener('mouseleave', () => hide(el));
     el.addEventListener('focus', () => showGame(el));
+    el.addEventListener('blur', () => hide(el));
+  });
+
+  // Info dots reuse the same floating tooltip, keyed by data-info → INFO_TIPS
+  function showInfo(el){
+    const info = INFO_TIPS[el.dataset.info];
+    if(!info) return;
+    activeTh = el;
+    el.setAttribute('data-tip-active','1');
+    tip.innerHTML = '<strong>' + info.title + '</strong>' + info.body;
+    tip.classList.add('is-visible');
+    position(el);
+  }
+  document.querySelectorAll('.info-dot[data-info]').forEach(el => {
+    el.addEventListener('mouseenter', () => showInfo(el));
+    el.addEventListener('mouseleave', () => hide(el));
+    el.addEventListener('click', () => showInfo(el));
+    el.addEventListener('focus', () => showInfo(el));
     el.addEventListener('blur', () => hide(el));
   });
 
