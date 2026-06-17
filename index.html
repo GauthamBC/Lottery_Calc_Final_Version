@@ -438,7 +438,8 @@
   .cmp-track{ height:34px; background:#f1f1f1; border:1px solid var(--border2); position:relative; overflow:hidden; }
   .cmp-fill{ height:100%; display:flex; align-items:center; padding-left:12px; }
   .cmp-fill span{ font-weight:900; font-size:13px; color:#0a1410; white-space:nowrap; }
-  .cmp-fill.green{ background:#3ec97e; }
+  .cmp-fill.keepall{ background:#101820; }
+  .cmp-fill.keepall span{ color:#fff; }
   .cmp-fill.gold{ background:var(--gold); }
   .cmp-amt{ font-family:ui-monospace,monospace; font-weight:900; font-size:15px; color:#101820; text-align:right; }
   @media(max-width:560px){
@@ -509,16 +510,20 @@
   }
 
   /* Panel 2 stat strip */
+  .statrow-lead{
+    margin:18px 0 8px; font-size:11px; font-weight:900; text-transform:uppercase;
+    letter-spacing:.1em; color:#5e6670;
+  }
   .intro-statrow{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:0;
   }
   .intro-stat{
-    padding:12px 14px; background:#fff; border:1px solid var(--border2);
-    border-top:4px solid var(--gold);
+    padding:12px 14px 12px 15px; background:#fff; border:1px solid var(--border2);
+    border-left:5px solid var(--gold);
   }
   .is-num{
     display:block; font-family:ui-monospace,monospace; font-weight:900;
-    font-size:21px; color:#101820; line-height:1; margin-bottom:6px;
+    font-size:21px; color:var(--orange); line-height:1; margin-bottom:6px;
   }
   .is-lbl{ display:block; font-size:11px; line-height:1.4; color:#5e6670; font-weight:600; }
   @media(max-width:560px){
@@ -620,6 +625,8 @@
   .method-section p{ margin:0; color:#3d4650; font-size:14px; line-height:1.65; font-weight:500; }
   .method-section p strong{ color:#000; font-weight:900; }
   .method-section p em{ font-style:italic; color:#101820; }
+  .method-link{ color:var(--orange); font-weight:900; text-decoration:underline; text-underline-offset:2px; }
+  .method-link:hover{ color:#000; }
   .method-sources{
     margin-top:16px; padding:14px 16px; background:var(--cream2);
     border-left:5px solid var(--gold); font-size:11.5px; line-height:1.6;
@@ -757,17 +764,37 @@
             <p class="ic-note">Bigger prizes climb toward the <strong>37% federal ceiling</strong> — and your state tax stacks on top.</p>
           </div>
 
-          <p class="study-byline">VegasInsider analysis · 2026 tax &amp; cost-of-living data · figures on the $200M lump-sum cash option</p>
+          <p class="statrow-lead">If you win a $200M jackpot:</p>
+          <div class="intro-statrow">
+            <div class="intro-stat">
+              <span class="is-num">$96M</span>
+              <span class="is-lbl">Cash from a "$200M" jackpot — the 48% lump sum</span>
+            </div>
+            <div class="intro-stat">
+              <span class="is-num">$35.5M</span>
+              <span class="is-lbl">Taken by federal tax</span>
+            </div>
+            <div class="intro-stat">
+              <span class="is-num">$60.5M</span>
+              <span class="is-lbl">Take-home before your state's cut</span>
+            </div>
+          </div>
+
         </div>
 
         <!-- Panel 2 — comparison bars -->
         <div class="intro-slide" data-slide="1">
           <p class="intro-lede">Win almost anywhere else, and you'd keep it all.</p>
           <p class="intro-copy" style="margin-bottom:16px;">The same <strong>$200M jackpot</strong> (cash value), by where you won it.</p>
-          <div class="cmp-rows">
+          <div class="intro-chart">
+            <div class="ic-head">
+              <span class="ic-title">What you keep, by country</span>
+              <span class="ic-tag">$200M cash · 2026</span>
+            </div>
+            <div class="cmp-rows">
             <div class="cmp-row">
               <div class="cmp-label">UK / Canada /<br>Australia</div>
-              <div class="cmp-track"><div class="cmp-fill green" style="width:100%"><span>100% kept</span></div></div>
+              <div class="cmp-track"><div class="cmp-fill keepall" style="width:100%"><span>100% kept</span></div></div>
               <div class="cmp-amt">$96.0M</div>
             </div>
             <div class="cmp-row">
@@ -780,8 +807,9 @@
               <div class="cmp-track"><div class="cmp-fill gold" style="width:49%"><span>49% kept</span></div></div>
               <div class="cmp-amt">$46.6M</div>
             </div>
+            </div>
           </div>
-          <div class="intro-statrow">
+          <div class="intro-statrow" style="margin-top:18px;">
             <div class="intro-stat">
               <span class="is-num">$35.5M</span>
               <span class="is-lbl">Federal cut — same in every US state</span>
@@ -1075,6 +1103,11 @@
       <div class="method-section">
         <h3>What's deliberately left out</h3>
         <p>To keep comparisons clean and consistent across all 51 jurisdictions, the model excludes <strong>local and city taxes</strong> (for example, New York City adds up to 3.876% on top of state tax), itemized deductions, and individual tax credits. Real outcomes vary with personal circumstances, payout timing and where exactly you live within a state. A handful of states get special handling where the law requires it — California and Washington exempt lottery winnings from state tax, and Mississippi applies a flat special rate.</p>
+      </div>
+
+      <div class="method-section">
+        <h3>Beyond the lottery</h3>
+        <p>A jackpot isn't the only way to land a windfall. The same federal and state tax rules apply to other big wins — prizes from <a class="method-link" href="https://www.vegasinsider.com/sweepstakes-casinos/new/">new sweepstakes casinos</a> and payouts at the <a class="method-link" href="https://www.vegasinsider.com/casinos/">best online casinos</a> are taxed on the same basis.</p>
       </div>
 
       <div class="method-box" style="border-left-color:var(--orange);">
