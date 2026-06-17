@@ -52,6 +52,32 @@
   }
   .wrap{max-width:880px;margin:0 auto;padding:0 0 82px;}
 
+  /* ── CMS-defensive baseline ──────────────────────────────────────────────
+     When embedded in a CMS the <body> styles are stripped and the host theme
+     cascades in (paragraph margins, text-align, fonts, line-heights). These
+     rules re-establish the tool's own baseline, scoped to .wrap so they only
+     affect this tool. :where() keeps the resets at zero specificity so every
+     one of the tool's own class rules still wins. */
+  .wrap{
+    width:100%;
+    text-align:left;
+    font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.45;
+    color:var(--ink);
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  :where(.wrap *){ box-sizing:border-box; }
+  :where(.wrap p, .wrap h1, .wrap h2, .wrap h3, .wrap h4, .wrap h5,
+         .wrap blockquote, .wrap figure, .wrap ul, .wrap ol, .wrap dl){
+    margin:0; padding:0; text-align:left; text-indent:0;
+  }
+  :where(.wrap li){ margin:0; }
+  :where(.wrap button){ font-family:inherit; line-height:normal; text-align:inherit; }
+  :where(.wrap img, .wrap svg){ max-width:100%; }
+  :where(.wrap table){ border-collapse:collapse; width:100%; }
+
   .px{padding:0 22px;}
   .eyebrow{
     font-size:10px;
@@ -107,9 +133,9 @@
     border:1px solid var(--border2);
     border-top:5px solid #000;
     border-radius:var(--r);
-    padding:22px;
+    padding:18px;
     box-shadow:var(--shadow);
-    margin-bottom:16px;
+    margin-bottom:13px;
   }
   .card::before{
     content:'';
@@ -252,17 +278,17 @@
     border:1px solid #f0dfad;
     border-left:5px solid var(--gold);
     border-radius:var(--r);
-    padding:24px 24px;
+    padding:20px 20px;
     box-shadow:var(--shadow);
-    margin-bottom:16px;
+    margin-bottom:13px;
   }
   .hero-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
   .take-lbl{font-size:10px;font-family:ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:#000;margin:0;font-weight:900;}
   .est-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-family:ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;background:#000;color:#fff;border:1px solid #000;padding:3px 8px;font-weight:900;white-space:nowrap;}
   .est-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;display:inline-block;}
-  .take-amt{font-size:clamp(38px,7vw,58px);font-weight:900;letter-spacing:-.045em;margin:0;line-height:1;color:var(--orange);}
-  .take-sub{color:#4a4a4a;font-size:13px;margin:6px 0 18px;font-weight:600;}
-  .bar-track{height:24px;overflow:hidden;background:#f5e6ad;display:flex;border:1px solid #efd991;}
+  .take-amt{font-size:clamp(32px,6vw,48px);font-weight:900;letter-spacing:-.045em;margin:0;line-height:1;color:var(--orange);}
+  .take-sub{color:#4a4a4a;font-size:12.5px;margin:5px 0 15px;font-weight:600;}
+  .bar-track{height:20px;overflow:hidden;background:#f5e6ad;display:flex;border:1px solid #efd991;}
   .b-take{background:#000;}.b-fed{background:var(--gold);}.b-state{background:var(--orange);}
   .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11.5px;color:#555;font-weight:700;}
   .legend span{display:flex;align-items:center;gap:5px;}
@@ -370,8 +396,8 @@
     border:1px solid var(--border2);
     border-top:7px solid #000;
     box-shadow:var(--shadow);
-    padding:28px 30px 26px;
-    margin-bottom:18px;
+    padding:22px 24px 20px;
+    margin-bottom:15px;
   }
   .vi-logo{
     position:absolute; top:20px; right:24px;
@@ -388,7 +414,7 @@
     .intro-shell h1{ padding-right:0; }
   }
   .study-hero-card::before{content:'';position:absolute;top:-7px;left:0;width:32%;height:7px;background:var(--gold);}
-  .study-hero-card h1{font-size:clamp(34px,5.2vw,58px);line-height:.98;margin-bottom:10px;max-width:900px;}
+  .study-hero-card h1{font-size:clamp(30px,4.6vw,50px);line-height:.98;margin-bottom:9px;max-width:900px;}
   .study-hero-card h1 em{font-style:normal;color:var(--orange);}
   .intro-lede{font-size:19px;color:#000;font-weight:900;margin:0 0 12px;}
   .intro-copy{max-width:920px;margin:0;color:#3d4650;font-size:15px;font-weight:600;line-height:1.65;}
@@ -414,7 +440,7 @@
      tallest slide (measured in JS) so all three share one height. Each
      slide is a flex column that fills the full height, so its content
      spreads evenly and never leaves a dead gap at the bottom. */
-  .intro-track{ overflow:hidden; }
+  .intro-track{ overflow:hidden; transition:height .3s cubic-bezier(.4,0,.2,1); }
   .intro-track .intro-slide{
     display:none;
     position:absolute; top:0; left:0; width:100%; height:100%;
@@ -425,9 +451,6 @@
     position:relative;
     flex-direction:column;
   }
-  /* Push the trailing note/credit to the bottom of the slide */
-  .intro-track .intro-slide > .study-byline,
-  .intro-track .intro-slide > .intro-quote-credit{ margin-top:auto; }
   /* Comparison rows breathe into the available vertical space */
   .intro-slide[data-slide="1"] .cmp-rows{ margin:auto 0; }
 
@@ -579,7 +602,7 @@
   .tab-note{background:var(--cream2);border:1px solid #efd991;border-left:6px solid var(--gold);padding:12px 14px;margin:0 0 14px;color:#4f4f4f;font-size:12px;font-weight:700;line-height:1.55;}
   .tab-note strong{color:#000;}
   .ranking-head{margin-bottom:14px;}
-  .ranking-head h2{font-size:clamp(24px,3.8vw,38px);letter-spacing:-.04em;line-height:1.05;margin:0 0 9px;color:#000;font-weight:900;}
+  .ranking-head h2{font-size:clamp(21px,3.2vw,32px);letter-spacing:-.04em;line-height:1.05;margin:0 0 8px;color:#000;font-weight:900;}
   .ranking-head p{max-width:870px;margin:0;color:#4c5661;font-size:14px;font-weight:600;line-height:1.65;}
   .ranking-head p strong{color:#000;font-weight:900;}
   .rank-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
@@ -717,6 +740,34 @@
   /* Plain money cell (no bar) */
   .money-plain { font-family:ui-monospace,monospace; font-weight:900; font-size:12px; text-align:center; }
 
+  /* ── Compact density layer ───────────────────────────────────────────────
+     Tightens sizing/spacing so the tool sits comfortably inside a CMS content
+     column (WordPress/Gutenberg themes tend to inflate base spacing & fonts).
+     Placed last so it overrides the base rules; scoped to .wrap to stay
+     self-contained. Tweak the multipliers here to scale density globally. */
+  .wrap .card{ padding:15px; margin-bottom:11px; }
+  .wrap .study-hero-card{ padding:22px 24px 20px; }
+  .wrap .study-hero-card h1{ font-size:clamp(26px,4vw,42px); }
+  .wrap .ranking-head h2{ font-size:clamp(19px,2.8vw,27px); }
+  .wrap .hero{ padding:18px 20px; }
+  .wrap .take-amt{ font-size:clamp(28px,5vw,40px); }
+  .wrap .take-sub{ font-size:12px; margin:5px 0 13px; }
+  .wrap .study-tabs-main{ margin:14px 0 12px; }
+  .wrap .study-tabs-main button{ padding:11px 12px; font-size:12px; }
+  .wrap .intro-lede{ font-size:17px; }
+  .wrap .intro-copy{ font-size:14px; }
+  .wrap .intro-quote{ font-size:16px; line-height:1.6; }
+  .wrap .method-section h3{ font-size:15px; }
+  .wrap .method-section p{ font-size:13px; }
+  .wrap .intro-chart{ padding:14px 16px 12px; }
+  .wrap .is-num{ font-size:19px; }
+  .wrap .panel-body{ font-size:13px; }
+  @media(max-width:560px){
+    .wrap .study-hero-card{ padding:18px 16px; }
+    .wrap .card{ padding:13px; }
+    .wrap .hero{ padding:15px 15px; }
+  }
+
 </style>
 </head>
 <body>
@@ -831,6 +882,7 @@
           <p class="intro-lede">Why we built this.</p>
           <blockquote class="intro-quote">"Every headline screams the annuity total, but almost every winner takes the cash — and then taxes carve it down again. We built this so anyone can see, in seconds, what a real win looks like in their own state, instead of trusting a billboard number that no winner ever actually receives."</blockquote>
           <p class="intro-quote-credit">VegasInsider Research Desk</p>
+
           <div class="intro-features">
             <div class="intro-feat">
               <span class="if-ico">🧮</span>
@@ -845,6 +897,7 @@
               <div><strong>Find where it goes furthest</strong><span>Winnings re-ranked by real buying power after local cost of living.</span></div>
             </div>
           </div>
+
         </div>
 
       </div>
@@ -1788,54 +1841,30 @@ function setupIntroCarousel(){
   if(!track || !slides.length) return;
   let idx = 0;
 
-  function lockHeight(){
-    // Measure each slide's natural content height one at a time, off-screen,
-    // without disturbing which slide is visibly active.
-    track.style.height = 'auto';
-    let max = 0;
-    slides.forEach(s=>{
-      // snapshot
-      const prev = {
-        position:s.style.position, height:s.style.height,
-        display:s.style.display, visibility:s.style.visibility,
-        left:s.style.left, top:s.style.top
-      };
-      // make measurable but invisible & out of flow
-      s.style.position='absolute';
-      s.style.left='-99999px';
-      s.style.top='0';
-      s.style.height='auto';
-      s.style.display='flex';
-      s.style.visibility='hidden';
-      max = Math.max(max, s.scrollHeight);
-      // restore
-      s.style.position=prev.position;
-      s.style.left=prev.left;
-      s.style.top=prev.top;
-      s.style.height=prev.height;
-      s.style.display=prev.display;
-      s.style.visibility=prev.visibility;
-    });
-    // ensure only the active slide is showing
-    slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
-    if(max > 0) track.style.height = max + 'px';
+  // Size the track to the ACTIVE slide only, so each panel is exactly as tall
+  // as its own content (no empty space) and the height animates smoothly.
+  function fitHeight(){
+    const active = slides[idx];
+    if(!active) return;
+    track.style.height = active.scrollHeight + 'px';
   }
 
   function go(n){
     idx = (n + slides.length) % slides.length;
     slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+    fitHeight();
   }
 
   if(prev) prev.addEventListener('click', ()=>go(idx-1));
   if(next) next.addEventListener('click', ()=>go(idx+1));
   dots.forEach(d=>d.addEventListener('click', ()=>go(parseInt(d.dataset.go,10))));
 
-  // Lock equal height after layout + fonts, and on resize.
+  // Initial fit, plus re-fit after fonts load and on resize.
   go(0);
-  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(lockHeight); }
-  setTimeout(lockHeight, 60);
-  window.addEventListener('resize', ()=>{ setTimeout(lockHeight, 50); });
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fitHeight); }
+  setTimeout(fitHeight, 60);
+  window.addEventListener('resize', ()=>{ setTimeout(fitHeight, 50); });
 }
 setupIntroCarousel();
 setupColumnTooltips();
