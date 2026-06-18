@@ -1,3 +1,4 @@
+
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -471,18 +472,34 @@
     .cmp-amt{ font-size:13px; }
   }
 
-  /* Quote panel — white theme */
+  /* Quote panel — single, attached quote card */
+  .intro-quote-card{
+    margin:0 0 6px;
+    padding:0 0 0 18px;
+    border-left:5px solid var(--gold);
+  }
   .intro-quote{
-    margin:0 0 6px; padding:0 0 0 16px; border-left:4px solid var(--gold);
-    font-size:18px; line-height:1.7; font-style:italic; font-weight:700;
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:18px;
+    line-height:1.7;
+    font-style:italic;
+    font-weight:700;
     color:#101820;
   }
   .intro-quote-credit{
-    display:inline-flex; align-items:center; gap:8px;
-    margin:14px 0 0; padding:8px 12px;
-    font-family:ui-monospace,monospace; font-size:11px; letter-spacing:.1em;
-    text-transform:uppercase; font-weight:900; color:#101820;
-    border-left:5px solid var(--gold); background:var(--cream2);
+    display:block;
+    margin:11px 0 0;
+    padding:0;
+    font-family:ui-monospace,monospace;
+    font-size:10.5px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    font-weight:900;
+    color:#5e6670;
+    background:transparent;
+    border:0;
   }
 
   /* ── Intro mini-chart (panel 1) ── */
@@ -555,7 +572,15 @@
   }
 
   /* Panel 3 feature list */
-  .intro-features{ display:grid; gap:10px; margin:16px 0 0; }
+  .intro-feature-lead{
+    margin:12px 0 8px;
+    font-size:12px;
+    line-height:1.25;
+    color:#101820;
+    font-weight:900;
+    letter-spacing:.02em;
+  }
+  .intro-features{ display:grid; gap:9px; margin:0; }
   .intro-feat{
     display:grid; grid-template-columns:40px 1fr; gap:12px; align-items:center;
     padding:11px 13px; background:#fffdf7; border:1px solid #f0dfad; border-left:4px solid var(--gold);
@@ -563,6 +588,46 @@
   .if-ico{ font-size:22px; line-height:1; text-align:center; }
   .intro-feat strong{ display:block; font-size:13px; color:#101820; font-weight:900; margin-bottom:2px; }
   .intro-feat span{ display:block; font-size:11.5px; line-height:1.45; color:#5e6670; font-weight:600; }
+
+  /* Panel 2 biggest-gap banner */
+  .intro-gap-banner{
+    margin:18px 0 0;
+    padding:18px 24px 20px;
+    background:#101820;
+    border-top:4px solid var(--gold);
+    color:#fff;
+  }
+  .ig-kicker{
+    margin:0 0 8px;
+    font-family:ui-monospace,monospace;
+    font-size:10px;
+    line-height:1.25;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    font-weight:900;
+    color:var(--gold);
+  }
+  .ig-title{
+    margin:0 0 8px;
+    color:#fff;
+    font-size:clamp(25px,3.6vw,36px);
+    line-height:1;
+    letter-spacing:-.045em;
+    font-weight:900;
+  }
+  .ig-title strong{color:var(--gold);font-weight:900;}
+  .ig-copy{
+    margin:0;
+    color:#d9dde3;
+    font-size:16px;
+    line-height:1.45;
+    font-weight:800;
+  }
+  @media(max-width:560px){
+    .intro-gap-banner{padding:15px 16px 17px;margin-top:14px;}
+    .ig-title{font-size:24px;line-height:1.05;}
+    .ig-copy{font-size:12.5px;line-height:1.45;}
+  }
 
   /* Nav controls */
   .intro-nav{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:14px; }
@@ -581,7 +646,7 @@
   .intro-dot:hover{ background:var(--gold); }
   .intro-dot.active{ background:var(--gold); width:24px; border-radius:99px; }
   .study-tabs-main{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 0 16px;position:sticky;top:0;z-index:20;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--border);}
-  .study-tabs-main button{appearance:none;border:1px solid var(--border2);background:#fff;color:#000;padding:13px 12px;font-family:inherit;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:var(--shadow);}
+  .study-tabs-main button{appearance:none;border:1px solid var(--border2);background:#fff;color:#000;padding:13px 12px;font-family:inherit;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:var(--shadow);text-align:center;display:flex;align-items:center;justify-content:center;}
   .study-tabs-main button:hover{background:var(--cream2);border-color:var(--gold);}
   .study-tabs-main button.active{background:#000;color:#fff;border-color:#000;border-bottom:5px solid var(--gold);}
   .tabs-hint{margin:-6px 0 16px;font-size:12.5px;line-height:1.5;color:#5e6670;font-weight:600;}
@@ -660,7 +725,7 @@
   @media(max-width:680px){
     .study-hero-card{padding:22px 18px;}
     .study-tabs-main{grid-template-columns:1fr;position:relative;top:auto;}
-    .study-tabs-main button{text-align:left;}
+    .study-tabs-main button{text-align:center;justify-content:center;}
     .rank-controls button{flex:1;}
   }
 
@@ -732,6 +797,14 @@
     height:10px; min-width:2px; flex-shrink:0;
     border-radius:0;
   }
+  .rank-table .bar-fill{
+    will-change:width, opacity, transform;
+    transform-origin:left center;
+    transition:
+      width .95s cubic-bezier(.2,.8,.2,1),
+      opacity .35s ease,
+      transform .95s cubic-bezier(.2,.8,.2,1);
+  }
   /* Tax table — black bar (federal) + gold bar (state) stacked */
   .bar-fed  { background:#000; }
   .bar-state{ background:var(--gold); }
@@ -739,6 +812,42 @@
   .bar-val  { background:#000; }
   /* Plain money cell (no bar) */
   .money-plain { font-family:ui-monospace,monospace; font-weight:900; font-size:12px; text-align:center; }
+
+
+  /* ── Intro-only micro animations: bars grow, numbers count up ── */
+  .intro-slide .ic-rfill,
+  .intro-slide .cmp-fill{
+    will-change:width, opacity, transform;
+    transform-origin:left center;
+    transition:
+      width .95s cubic-bezier(.2,.8,.2,1),
+      opacity .35s ease,
+      transform .95s cubic-bezier(.2,.8,.2,1);
+  }
+
+
+
+  /* ── Calculator output animations: smooth count-up/down + fluid bars ── */
+  .hero .bar-track span{
+    display:block;
+    height:100%;
+    width:0;
+    flex:0 0 auto;
+    will-change:width;
+    transition:width .95s cubic-bezier(.2,.8,.2,1);
+  }
+  .take-amt,
+  .eff-row strong,
+  .panel .val,
+  .settle strong{
+    font-variant-numeric:tabular-nums;
+  }
+  .calc-animating{
+    will-change:contents;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero .bar-track span{transition:none!important;}
+  }
 
   /* ── Compact density layer ───────────────────────────────────────────────
      Tightens sizing/spacing so the tool sits comfortably inside a CMS content
@@ -766,6 +875,109 @@
     .wrap .study-hero-card{ padding:18px 16px; }
     .wrap .card{ padding:13px; }
     .wrap .hero{ padding:15px 15px; }
+  }
+
+  /* Panel 3 height guard: keeps the added intro line inside the locked carousel height */
+  .wrap .intro-slide[data-slide="2"] .intro-quote-card{ margin-top:0; }
+  .wrap .intro-slide[data-slide="2"] .intro-quote{ font-size:15.5px; line-height:1.52; }
+  .wrap .intro-slide[data-slide="2"] .intro-quote-credit{ margin-top:11px; }
+  .wrap .intro-slide[data-slide="2"] .intro-feature-lead{ margin:38px 0 10px; font-size:17px; line-height:1.25; }
+  .wrap .intro-slide[data-slide="2"] .intro-features{ gap:8px; }
+  .wrap .intro-slide[data-slide="2"] .intro-feat{ padding:10px 12px; }
+  @media(max-width:560px){
+    .wrap .intro-slide[data-slide="2"] .intro-quote-card{ padding-left:14px; }
+    .wrap .intro-slide[data-slide="2"] .intro-quote{ font-size:14px; line-height:1.45; }
+    .wrap .intro-slide[data-slide="2"] .intro-quote-credit{ margin-top:8px; font-size:9.5px; }
+    .wrap .intro-slide[data-slide="2"] .intro-feature-lead{ margin:24px 0 8px; font-size:15px; line-height:1.25; }
+    .wrap .intro-slide[data-slide="2"] .intro-feat{ grid-template-columns:34px 1fr; padding:9px 10px; }
+    .wrap .intro-slide[data-slide="2"] .intro-feat strong{ font-size:12.5px; }
+    .wrap .intro-slide[data-slide="2"] .intro-feat span{ font-size:11px; line-height:1.35; }
+  }
+
+
+  /* ── Carousel 2 responsive height guard ──────────────────────────────
+     The carousel height stays locked to slide 1. Slide 2 adapts inside that
+     fixed box: the chart tightens as the viewport narrows, and the black
+     banner takes the remaining space with its text vertically balanced. */
+  .wrap .intro-slide[data-slide="1"] .intro-copy{ margin-bottom:12px !important; }
+  .wrap .intro-slide[data-slide="1"] .intro-chart{
+    margin-top:14px;
+    padding:14px 16px 12px;
+    flex:0 0 auto;
+  }
+  .wrap .intro-slide[data-slide="1"] .cmp-rows{ gap:9px; margin:0; }
+  .wrap .intro-slide[data-slide="1"] .cmp-track{ height:30px; }
+  .wrap .intro-slide[data-slide="1"] .intro-gap-banner{
+    margin:12px 0 0;
+    padding:18px 20px 20px;
+    border-top-width:4px;
+    min-height:142px;
+    flex:1 1 auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .wrap .intro-slide[data-slide="1"] .ig-kicker{
+    margin:0 0 6px;
+    font-size:9.5px;
+    line-height:1.2;
+    letter-spacing:.17em;
+  }
+  .wrap .intro-slide[data-slide="1"] .ig-title{
+    margin:0 0 13px;
+    font-size:clamp(25px,3vw,34px);
+    line-height:1.02;
+  }
+  .wrap .intro-slide[data-slide="1"] .ig-copy{
+    font-size:14.5px;
+    line-height:1.4;
+    font-weight:800;
+    max-width:980px;
+  }
+
+  @media(max-width:1100px){
+    .wrap .intro-slide[data-slide="1"] .intro-copy{ margin-bottom:10px !important; }
+    .wrap .intro-slide[data-slide="1"] .intro-chart{ margin-top:10px; padding:12px 14px 11px; }
+    .wrap .intro-slide[data-slide="1"] .ic-head{ margin-bottom:11px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-row{ grid-template-columns:150px 1fr 70px; gap:12px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-label{ font-size:13px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-track{ height:28px; }
+    .wrap .intro-slide[data-slide="1"] .intro-gap-banner{ margin-top:10px; padding:16px 18px; min-height:146px; }
+    .wrap .intro-slide[data-slide="1"] .ig-title{ font-size:clamp(24px,3.2vw,30px); line-height:1.04; margin-bottom:12px; }
+    .wrap .intro-slide[data-slide="1"] .ig-copy{ font-size:13.5px; line-height:1.35; }
+  }
+
+  @media(max-width:760px){
+    .wrap .intro-slide[data-slide="1"] .intro-lede{ font-size:15px; line-height:1.22; }
+    .wrap .intro-slide[data-slide="1"] .intro-copy{ font-size:12.5px; line-height:1.35; margin-bottom:8px !important; }
+    .wrap .intro-slide[data-slide="1"] .intro-chart{ margin-top:8px; padding:11px 12px 10px; }
+    .wrap .intro-slide[data-slide="1"] .ic-head{ gap:7px; margin-bottom:9px; }
+    .wrap .intro-slide[data-slide="1"] .ic-title{ font-size:12.5px; }
+    .wrap .intro-slide[data-slide="1"] .ic-tag{ font-size:8.5px; padding:3px 6px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-rows{ gap:7px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-row{ grid-template-columns:112px 1fr 58px; gap:8px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-label{ font-size:11px; line-height:1.1; }
+    .wrap .intro-slide[data-slide="1"] .cmp-track{ height:24px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-fill{ padding-left:8px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-fill span{ font-size:11px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-amt{ font-size:12px; }
+    .wrap .intro-slide[data-slide="1"] .intro-gap-banner{ margin-top:8px; padding:13px 14px; min-height:130px; }
+    .wrap .intro-slide[data-slide="1"] .ig-kicker{ font-size:8.5px; margin-bottom:5px; }
+    .wrap .intro-slide[data-slide="1"] .ig-title{ font-size:clamp(20px,4.6vw,25px); line-height:1.05; margin-bottom:10px; }
+    .wrap .intro-slide[data-slide="1"] .ig-copy{ font-size:12px; line-height:1.35; }
+  }
+
+  @media(max-width:560px){
+    .wrap .intro-slide[data-slide="1"] .intro-copy{ margin-bottom:7px !important; }
+    .wrap .intro-slide[data-slide="1"] .intro-chart{ margin-top:7px; padding:10px 10px 9px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-row{ grid-template-columns:88px 1fr 54px; gap:7px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-track{ height:22px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-label{ font-size:10px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-fill span{ font-size:10px; }
+    .wrap .intro-slide[data-slide="1"] .cmp-amt{ font-size:11px; }
+    .wrap .intro-slide[data-slide="1"] .intro-gap-banner{ margin-top:7px; padding:11px 12px; min-height:118px; }
+    .wrap .intro-slide[data-slide="1"] .ig-title{ font-size:21px; line-height:1.05; margin-bottom:9px; }
+    .wrap .intro-slide[data-slide="1"] .ig-copy{ font-size:11.5px; line-height:1.35; }
   }
 
 </style>
@@ -860,28 +1072,21 @@
             </div>
             </div>
           </div>
-          <div class="intro-statrow" style="margin-top:18px;">
-            <div class="intro-stat">
-              <span class="is-num">$35.5M</span>
-              <span class="is-lbl">Federal cut — same in every US state</span>
-            </div>
-            <div class="intro-stat">
-              <span class="is-num">$14.0M</span>
-              <span class="is-lbl">Gap between the best & worst US state</span>
-            </div>
-            <div class="intro-stat">
-              <span class="is-num">$49.4M</span>
-              <span class="is-lbl">What an NYC winner loses that a UK winner keeps</span>
-            </div>
+          <div class="intro-gap-banner">
+            <p class="ig-kicker">Biggest gap</p>
+            <p class="ig-title"><strong>$49.4M</strong> more kept outside the US</p>
+            <p class="ig-copy">An NYC winner keeps $46.6M from the same cash prize, versus $96.0M in the UK, Canada or Australia.</p>
           </div>
-          <p class="study-byline" style="margin-top:14px;">"US — best state" is any no-tax state (federal only). "US — worst (NYC)" adds New York State + city tax. Being American alone can cost a winner tens of millions a UK or Canadian winner keeps.</p>
         </div>
 
         <!-- Panel 3 — why we built it -->
         <div class="intro-slide" data-slide="2">
           <p class="intro-lede">Why we built this.</p>
-          <blockquote class="intro-quote">"Every headline screams the annuity total, but almost every winner takes the cash — and then taxes carve it down again. We built this so anyone can see, in seconds, what a real win looks like in their own state, instead of trusting a billboard number that no winner ever actually receives."</blockquote>
-          <p class="intro-quote-credit">VegasInsider Research Desk</p>
+          <div class="intro-quote-card">
+            <blockquote class="intro-quote">"Every jackpot headline shows the biggest possible number — but that is not usually what winners take home. We built this so anyone can see, in seconds, what a real win could look like in their own state, instead of relying on the billboard number alone."</blockquote>
+            <p class="intro-quote-credit">— VegasInsider spokesperson</p>
+          </div>
+          <p class="intro-feature-lead">At a glance, this tool shows you three things:</p>
 
           <div class="intro-features">
             <div class="intro-feat">
@@ -1134,13 +1339,13 @@
     <div class="card">
       <div class="ranking-head">
         <p class="sec-label">Methodology &amp; notes</p>
-        <h2>How we built this</h2>
-        <p>A transparent look at the data and assumptions behind the calculator and rankings — so you can judge the numbers for yourself.</p>
+        <h2>How we built this lottery calculator</h2>
+        <p>A transparent look at the lottery data, tax assumptions and cost-of-living inputs behind the calculator and rankings — so you can judge the numbers for yourself.</p>
       </div>
 
       <div class="method-section">
-        <h3>The tax engine</h3>
-        <p>Every figure in the calculator and both rankings comes from one shared tax engine, so the tool can never contradict itself. We apply <strong>2026 federal income-tax brackets</strong> (IRS Revenue Procedure 2025-32) on top of each state's own <strong>2026 income-tax brackets and standard deductions</strong>, sourced from the Tax Foundation's annual state-by-state report and individual state revenue departments. Tax on winnings is calculated the honest way — we compute your total tax <em>with</em> the prize, subtract the tax you'd owe <em>without</em> it, and the difference is what the win actually costs you. That means a prize stacks on top of any other income you enter, pushing into higher brackets exactly as it would on a real return.</p>
+        <h3>The lottery tax engine</h3>
+        <p>Every figure in the lottery calculator and both rankings comes from one shared tax engine, so the tool can never contradict itself. We apply <strong>2026 federal income-tax brackets</strong> (IRS Revenue Procedure 2025-32) on top of each state's own <strong>2026 income-tax brackets and standard deductions</strong>, sourced from the Tax Foundation's annual state-by-state report and individual state revenue departments. Tax on winnings is calculated the honest way — we compute your total tax <em>with</em> the prize, subtract the tax you'd owe <em>without</em> it, and the difference is what the win actually costs you. That means a prize stacks on top of any other income you enter, pushing into higher brackets exactly as it would on a real return.</p>
       </div>
 
       <div class="method-section">
@@ -1156,11 +1361,6 @@
       <div class="method-section">
         <h3>What's deliberately left out</h3>
         <p>To keep comparisons clean and consistent across all 51 jurisdictions, the model excludes <strong>local and city taxes</strong> (for example, New York City adds up to 3.876% on top of state tax), itemized deductions, and individual tax credits. Real outcomes vary with personal circumstances, payout timing and where exactly you live within a state. A handful of states get special handling where the law requires it — California and Washington exempt lottery winnings from state tax, and Mississippi applies a flat special rate.</p>
-      </div>
-
-      <div class="method-section">
-        <h3>Beyond the lottery</h3>
-        <p>A jackpot isn't the only way to land a windfall. The same federal and state tax rules apply to other big wins — prizes from <a class="method-link" href="https://www.vegasinsider.com/sweepstakes-casinos/new/">new sweepstakes casinos</a> and payouts at the <a class="method-link" href="https://www.vegasinsider.com/casinos/">best online casinos</a> are taxed on the same basis.</p>
       </div>
 
       <div class="method-box" style="border-left-color:var(--orange);">
@@ -1199,6 +1399,123 @@ function setPrizeHint(mode){
   }
 }
 const $=id=>document.getElementById(id);
+
+// Smooth calculator output animations. These preserve each previous value so
+// changing the state, jackpot, filing status or payout mode feels like a live
+// estimate rather than a hard text swap.
+const calcAnimState = {};
+const calcAnimRuns = {};
+const reduceCalcMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function readAnimNumber(text){
+  const raw = String(text || '').trim();
+  const match = raw.replace(/,/g, '').match(/\d+(?:\.\d+)?/);
+  if(!match) return null;
+  const negative = /^[−-]/.test(raw);
+  const value = parseFloat(match[0]) * (negative ? -1 : 1);
+  const decMatch = raw.match(/\d+\.(\d+)/);
+  return {
+    value: Number.isFinite(value) ? value : 0,
+    isCurrency: raw.includes('$'),
+    isPercent: raw.includes('%'),
+    decimals: decMatch ? decMatch[1].length : 0,
+    minus: raw.includes('−') ? '−' : '-'
+  };
+}
+
+function formatAnimNumber(template, value){
+  const info = readAnimNumber(template);
+  if(!info) return template;
+  const sign = value < 0 ? info.minus : '';
+  const abs = Math.abs(value);
+  let out;
+  if(info.isCurrency){
+    out = '$' + Math.round(abs).toLocaleString('en-US');
+  }else if(info.isPercent){
+    out = abs.toFixed(info.decimals) + '%';
+  }else if(info.decimals){
+    out = abs.toFixed(info.decimals);
+  }else{
+    out = Math.round(abs).toLocaleString('en-US');
+  }
+  return sign + out;
+}
+
+function animateDynamicText(el, finalText, key, duration = 900){
+  if(!el) return;
+  finalText = String(finalText);
+  const parsed = readAnimNumber(finalText);
+  if(!parsed || reduceCalcMotion()){
+    el.textContent = finalText;
+    if(parsed) calcAnimState[key] = parsed.value;
+    return;
+  }
+
+  const startValue = Object.prototype.hasOwnProperty.call(calcAnimState, key)
+    ? calcAnimState[key]
+    : 0;
+  const endValue = parsed.value;
+  const run = (calcAnimRuns[key] || 0) + 1;
+  calcAnimRuns[key] = run;
+  const started = performance.now();
+  el.classList.add('calc-animating');
+
+  function tick(now){
+    if(calcAnimRuns[key] !== run) return;
+    const progress = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = startValue + (endValue - startValue) * eased;
+    el.textContent = formatAnimNumber(finalText, current);
+    if(progress < 1){
+      requestAnimationFrame(tick);
+    }else{
+      el.textContent = finalText;
+      el.classList.remove('calc-animating');
+      calcAnimState[key] = endValue;
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+function animatePanelValues(){
+  document.querySelectorAll('#immBody .val').forEach((el, i) => {
+    animateDynamicText(el, el.textContent.trim(), 'imm-' + i, 820);
+  });
+  document.querySelectorAll('#finalBody .val').forEach((el, i) => {
+    animateDynamicText(el, el.textContent.trim(), 'final-' + i, 820);
+  });
+  document.querySelectorAll('#settle strong').forEach((el, i) => {
+    animateDynamicText(el, el.textContent.trim(), 'settle-' + i, 820);
+  });
+}
+
+function updateHeroBars(takePct, fedPct, statePct){
+  const bar = $('bars');
+  if(!bar) return;
+  const vals = [
+    ['take', 'b-take', Math.max(0, takePct)],
+    ['fed', 'b-fed', Math.max(0, fedPct)],
+    ['state', 'b-state', Math.max(0, statePct)]
+  ];
+  if(!bar.dataset.ready){
+    bar.innerHTML = vals.map(v => '<span class="' + v[1] + '" data-bar="' + v[0] + '" style="width:0%"></span>').join('');
+    bar.dataset.ready = '1';
+    // Paint the zero-width state first, then grow to the real split.
+    void bar.offsetWidth;
+  }
+  vals.forEach(([name, cls, pct]) => {
+    let el = bar.querySelector('[data-bar="' + name + '"]');
+    if(!el){
+      el = document.createElement('span');
+      el.className = cls;
+      el.dataset.bar = name;
+      el.style.width = '0%';
+      bar.appendChild(el);
+    }
+    const width = Math.min(100, Math.max(0, pct));
+    requestAnimationFrame(() => { el.style.width = width + '%'; });
+  });
+}
 
 function taxBrk(t,b){
   if(t<=0||!b||!b.length)return 0;
@@ -1298,19 +1615,16 @@ function calc(){
   const eff=taxed?totTax/taxed:0;
 
   // Hero
-  $('takeHome').textContent=fmt(take);
+  animateDynamicText($('takeHome'), fmt(take), 'takeHome', 950);
   let sub='of '+fmt(taxed);
   if(game!=='other'&&payout==='lump') sub+=` cash value (from ${fmt(adv)} advertised)`;
   else if(game!=='other'&&payout==='annuity') sub+=` per annual payment`;
   else sub+=` won`;
   sub+=', after all federal & state tax';
   $('ofAmt').textContent=sub;
-  $('effRate').textContent=pctN(eff);
+  animateDynamicText($('effRate'), pctN(eff), 'effRate', 800);
   const p=taxed||1;
-  $('bars').innerHTML=
-    `<span class="b-take" style="width:${Math.max(take,0)/p*100}%"></span>`+
-    `<span class="b-fed" style="width:${fed/p*100}%"></span>`+
-    `<span class="b-state" style="width:${stx/p*100}%"></span>`;
+  updateHeroBars(Math.max(take,0)/p*100, fed/p*100, stx/p*100);
 
   // Cash note
   const cn=$('cashNote');
@@ -1354,6 +1668,8 @@ function calc(){
     settle.className='settle owe';
     settle.innerHTML=`<div class="settle-head">⚠️ You owe ${fmt(-gap)} extra at filing</div><p>Only <strong>${fmt(totWh)}</strong> was withheld, but your real tax is <strong>${fmt(totTax)}</strong>. Common when a large jackpot hits the top 37% bracket but only 24% was withheld.</p>`;
   }
+
+  animatePanelValues();
 
   // State note
   const nb=$('stateNote');
@@ -1501,6 +1817,50 @@ function taxBarCell(fed, stx, totalLost, maxTotal, rankRatio) {
 // ── Sort state for tax table ───────────────────────────────────────────────
 let taxSortCol = 'totalLost'; let taxSortDir = -1; // -1=desc, 1=asc
 
+
+function animateRankingBars(scope){
+  const root = typeof scope === 'string' ? document.querySelector(scope) : scope;
+  if(!root) return;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const bars = Array.from(root.querySelectorAll('.bar-fill'));
+  if(!bars.length) return;
+
+  bars.forEach((el, index) => {
+    const inline = el.getAttribute('style') || '';
+    const match = inline.match(/width\s*:\s*([^;]+)/i);
+    const targetWidth = match ? match[1].trim() : (el.style.width || '0%');
+    el.dataset.targetWidth = targetWidth;
+    el.style.transitionDelay = reduceMotion ? '0ms' : (index * 18) + 'ms';
+
+    if(reduceMotion){
+      el.style.width = targetWidth;
+      el.style.opacity = '1';
+      el.style.transform = 'scaleX(1)';
+      return;
+    }
+
+    el.style.transition = 'none';
+    el.style.width = '0%';
+    el.style.opacity = '0.55';
+    el.style.transform = 'scaleX(.98)';
+  });
+
+  if(reduceMotion) return;
+
+  bars.forEach(el => { void el.offsetWidth; });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      bars.forEach(el => {
+        el.style.transition = '';
+        el.style.width = el.dataset.targetWidth || el.style.width;
+        el.style.opacity = '1';
+        el.style.transform = 'scaleX(1)';
+      });
+    });
+  });
+}
+
 function renderTaxRanking() {
   const tbody = $('taxRankingBody');
   if (!tbody) return;
@@ -1549,6 +1909,8 @@ function renderTaxRanking() {
       <td class="muted-cell">${fmtWhole(salYrs)}</td>
     </tr>`;
   }).join('');
+
+  animateRankingBars(tbody);
 }
 
 // ── Sort state for value table ────────────────────────────────────────────
@@ -1601,6 +1963,8 @@ function renderValueRanking() {
       <td class="money-plain">${r.stx>0?fmtMillions(r.stx):'$0'}</td>
     </tr>`;
   }).join('');
+
+  animateRankingBars(tbody);
 }
 
 function renderStudyRankings() {
@@ -1841,12 +2205,125 @@ function setupIntroCarousel(){
   if(!track || !slides.length) return;
   let idx = 0;
 
-  // Size the track to the ACTIVE slide only, so each panel is exactly as tall
-  // as its own content (no empty space) and the height animates smoothly.
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function parseNumber(text){
+    const match = String(text || '').replace(/,/g,'').match(/-?\d+(?:\.\d+)?/);
+    return match ? parseFloat(match[0]) : 0;
+  }
+
+  function decimalsFor(text){
+    const match = String(text || '').match(/\d+\.(\d+)/);
+    return match ? match[1].length : 0;
+  }
+
+  function formatLike(original, value){
+    const source = String(original || '');
+    const dec = decimalsFor(source);
+    const number = dec ? value.toFixed(dec) : Math.round(value).toString();
+    if(source.includes('$')) return '$' + number + (source.includes('M') ? 'M' : '');
+    if(source.includes('%')) return (source.trim().startsWith('~') ? '~' : '') + number + '%' + (source.includes(' kept') ? ' kept' : '');
+    return number;
+  }
+
+  function prepAnimatedBits(slide){
+    slide.querySelectorAll('.ic-rfill, .cmp-fill').forEach((el, index) => {
+      if(!el.dataset.targetWidth){
+        const inline = el.getAttribute('style') || '';
+        const match = inline.match(/width\s*:\s*([^;]+)/i);
+        el.dataset.targetWidth = match ? match[1].trim() : (el.style.width || '0%');
+      }
+
+      el.style.transition = 'none';
+      el.style.transitionDelay = prefersReducedMotion ? '0ms' : (index * 90) + 'ms';
+      el.style.width = prefersReducedMotion ? el.dataset.targetWidth : '0%';
+      el.style.opacity = prefersReducedMotion ? '1' : '0.55';
+      el.style.transform = prefersReducedMotion ? 'scaleX(1)' : 'scaleX(.98)';
+    });
+
+    slide.querySelectorAll('.ic-rpct, .is-num, .cmp-amt, .cmp-fill span, .ig-title strong').forEach(el => {
+      if(!el.dataset.finalText) el.dataset.finalText = el.textContent.trim();
+      el.textContent = prefersReducedMotion ? el.dataset.finalText : formatLike(el.dataset.finalText, 0);
+    });
+  }
+
+  function animateNumber(el, duration){
+    const finalText = el.dataset.finalText || el.textContent.trim();
+    const target = parseNumber(finalText);
+    const start = performance.now();
+
+    function tick(now){
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatLike(finalText, target * eased);
+      if(progress < 1){
+        requestAnimationFrame(tick);
+      }else{
+        el.textContent = finalText;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function animateIntroSlide(slide){
+    if(!slide) return;
+    prepAnimatedBits(slide);
+
+    if(prefersReducedMotion) return;
+
+    const bars = Array.from(slide.querySelectorAll('.ic-rfill, .cmp-fill'));
+    bars.forEach(el => { void el.offsetWidth; }); // force the empty state to render first
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        bars.forEach(el => {
+          el.style.transition = '';
+          el.style.width = el.dataset.targetWidth || el.style.width;
+          el.style.opacity = '1';
+          el.style.transform = 'scaleX(1)';
+        });
+
+        slide.querySelectorAll('.ic-rpct, .is-num, .cmp-amt, .cmp-fill span, .ig-title strong').forEach((el, index) => {
+          setTimeout(() => animateNumber(el, 950), Math.min(index * 45, 220));
+        });
+      });
+    });
+  }
+
+  // Keep the carousel locked to slide 1's height. Slide 2 has been compacted
+  // to fit inside that same box, so changing slides will not make the carousel
+  // container jump taller.
+  function measureSlide(slide){
+    if(!slide) return 0;
+    const wasActive = slide.classList.contains('active');
+    if(wasActive) return slide.scrollHeight;
+
+    const prevDisplay = slide.style.display;
+    const prevPosition = slide.style.position;
+    const prevVisibility = slide.style.visibility;
+    const prevHeight = slide.style.height;
+    const prevPointerEvents = slide.style.pointerEvents;
+
+    slide.style.display = 'flex';
+    slide.style.position = 'relative';
+    slide.style.visibility = 'hidden';
+    slide.style.height = 'auto';
+    slide.style.pointerEvents = 'none';
+
+    const h = slide.scrollHeight;
+
+    slide.style.display = prevDisplay;
+    slide.style.position = prevPosition;
+    slide.style.visibility = prevVisibility;
+    slide.style.height = prevHeight;
+    slide.style.pointerEvents = prevPointerEvents;
+    return h;
+  }
+
   function fitHeight(){
-    const active = slides[idx];
-    if(!active) return;
-    track.style.height = active.scrollHeight + 'px';
+    const baseHeight = measureSlide(slides[0]);
+    if(!baseHeight) return;
+    track.style.height = baseHeight + 'px';
   }
 
   function go(n){
@@ -1854,6 +2331,7 @@ function setupIntroCarousel(){
     slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
     fitHeight();
+    animateIntroSlide(slides[idx]);
   }
 
   if(prev) prev.addEventListener('click', ()=>go(idx-1));
