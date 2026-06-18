@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -43,6 +44,7 @@
 
   *,*::before,*::after{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  html,body{height:100%;}
   body{
     margin:0;
     background:var(--bg);
@@ -50,6 +52,20 @@
     font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     line-height:1.45;
     -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  .iframe-scroll-shell{
+    width:100%;
+    height:100vh;
+    overflow:auto;
+    overflow-x:auto;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    background:var(--bg);
+  }
+  .iframe-scroll-shell > .wrap{
+    min-height:100%;
   }
   .wrap{max-width:880px;margin:0 auto;padding:0 0 82px;}
 
@@ -391,6 +407,10 @@
      VegasInsider data-study shell + ranking panes
   ───────────────────────────────────────────────────────────── */
   .wrap{max-width:1120px;}
+  @media(max-width:760px){
+    /* Keeps the full tool accessible inside iframes that hide native iframe scrollbars. */
+    .iframe-scroll-shell > .wrap{min-width:760px;}
+  }
   .study-hero-card{
     position:relative;
     background:#fff;
@@ -980,10 +1000,88 @@
     .wrap .intro-slide[data-slide="1"] .ig-copy{ font-size:11.5px; line-height:1.35; }
   }
 
+
+
+  /* ── Ranking export controls ──────────────────────────────────────────── */
+  .rank-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin:0 0 16px;
+    flex-wrap:wrap;
+  }
+  .rank-toolbar .rank-subtabs{ margin:0; }
+  .rank-export{ position:relative; margin-left:auto; }
+  .export-main{
+    appearance:none;
+    border:1px solid #000;
+    background:#000;
+    color:#fff;
+    padding:10px 15px;
+    font-family:inherit;
+    font-size:12px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    min-height:40px;
+  }
+  .export-main::after{ content:'⌄'; color:var(--gold); font-size:14px; line-height:1; transform:translateY(-1px); }
+  .export-main[aria-expanded="true"]::after{ transform:rotate(180deg) translateY(1px); }
+  .export-main:hover{ background:#151515; }
+  .export-menu{
+    position:absolute;
+    right:0;
+    top:calc(100% + 7px);
+    min-width:190px;
+    background:#fff;
+    border:1px solid var(--border2);
+    border-top:4px solid var(--gold);
+    box-shadow:0 14px 30px rgba(0,0,0,.18);
+    padding:6px;
+    z-index:50;
+    display:none;
+  }
+  .export-menu.open{ display:block; }
+  .export-menu button{
+    width:100%;
+    appearance:none;
+    border:0;
+    background:#fff;
+    color:#000;
+    padding:10px 11px;
+    font-family:inherit;
+    font-size:12px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    cursor:pointer;
+    text-align:left;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .export-menu button:hover{ background:var(--cream2); }
+  .export-menu button span{ color:var(--orange); font-family:ui-monospace,monospace; font-size:10px; }
+  @media(max-width:680px){
+    .rank-toolbar{ align-items:stretch; }
+    .rank-toolbar .rank-subtabs{ flex:1 1 100%; }
+    .rank-export{ width:100%; margin-left:0; }
+    .export-main{ width:100%; justify-content:center; }
+    .export-menu{ left:0; right:0; }
+  }
+
 </style>
 </head>
 <body>
 
+<div class="iframe-scroll-shell">
 <div class="wrap px">
   <div class="intro-carousel" id="introCarousel">
     <div class="study-hero-card intro-shell">
@@ -1269,17 +1367,26 @@
   </div>
 
   <div class="study-pane active" id="study-pane-ranking">
-    <div class="rank-subtabs" role="tablist" aria-label="Ranking views">
-      <button type="button" class="rank-subtab active" data-rank-sub="tax">Highest taxes</button>
-      <button type="button" class="rank-subtab" data-rank-sub="value">Buying power</button>
+    <div class="rank-toolbar">
+      <div class="rank-subtabs" role="tablist" aria-label="Ranking views">
+        <button type="button" class="rank-subtab active" data-rank-sub="tax">Highest taxes</button>
+        <button type="button" class="rank-subtab" data-rank-sub="value">Buying power</button>
+      </div>
+      <div class="rank-export">
+        <button type="button" class="export-main" id="rankExportToggle" aria-expanded="false" aria-controls="rankExportMenu">Export top 10</button>
+        <div class="export-menu" id="rankExportMenu" role="menu" aria-label="Export active ranking">
+          <button type="button" data-export-rank="image" role="menuitem">Download image <span>PNG</span></button>
+          <button type="button" data-export-rank="csv" role="menuitem">Download CSV <span>CSV</span></button>
+        </div>
+      </div>
     </div>
 
   <div class="rank-sub active" id="rank-sub-tax">
     <div class="card">
       <div class="ranking-head">
-        <p class="sec-label">Ranking 1 · Highest taxes</p>
-        <h2>Where winners lose the most to tax <button type="button" class="info-dot" data-info="tax-rank" aria-label="About this ranking">i</button></h2>
-        <p>Each state ranked by total tax lost on a $200M jackpot.</p>
+        <p class="sec-label" id="taxRankKicker">Ranking 1 · Highest taxes</p>
+        <h2 id="taxRankTitle">Where winners lose the most to tax <button type="button" class="info-dot" data-info="tax-rank" aria-label="About this ranking">i</button></h2>
+        <p id="taxRankSubtitle">Each state ranked by total tax lost on a $200M jackpot.</p>
       </div>
       <div class="rank-controls" aria-label="Tax ranking sort">
         <button type="button" class="active" data-tax-sort="most">Most lost first</button>
@@ -1307,9 +1414,9 @@
   <div class="rank-sub" id="rank-sub-value">
     <div class="card">
       <div class="ranking-head">
-        <p class="sec-label">Ranking 2 · Where your money goes furthest</p>
-        <h2>Where your money goes furthest <button type="button" class="info-dot" data-info="value-rank" aria-label="About this ranking">i</button></h2>
-        <p>Take-home re-ranked by local cost of living.</p>
+        <p class="sec-label" id="valueRankKicker">Ranking 2 · Highest buying power</p>
+        <h2 id="valueRankTitle">Where your money goes furthest <button type="button" class="info-dot" data-info="value-rank" aria-label="About this ranking">i</button></h2>
+        <p id="valueRankSubtitle">Take-home re-ranked by local cost of living.</p>
       </div>
       <div class="rank-controls" aria-label="Value ranking sort">
         <button type="button" class="active" data-value-sort="best">Goes furthest first</button>
@@ -1377,6 +1484,7 @@
     <strong>How it works:</strong> The lottery withholds a flat 24% federal + your state's top rate immediately when you collect (Day One). In spring you file a tax return and your real tax is calculated on progressive brackets — any gap is settled as a refund or extra payment. <strong>This is an estimate</strong> — local/city taxes (e.g. NYC adds up to 3.876%), itemised deductions and credits are not included. Cash option ratios vary per drawing (~45–50%).
     <div style="margin-top:6px"><strong>Sources:</strong> IRS Rev. Proc. 2025-32 (TY2026) · Tax Foundation State Brackets 2026 · MERIC Cost of Living Index 2025 · Zillow/NAR median home prices Q1 2026 · BLS/Census ACS 2024 median income. Not tax advice.</div>
   </footer>
+</div>
 </div>
 
 <script>
@@ -1818,6 +1926,84 @@ function taxBarCell(fed, stx, totalLost, maxTotal, rankRatio) {
 let taxSortCol = 'totalLost'; let taxSortDir = -1; // -1=desc, 1=asc
 
 
+function syncLegacySortButtons(type){
+  if(type === 'tax'){
+    const isPrimary = taxSortCol === 'totalLost';
+    document.querySelectorAll('[data-tax-sort]').forEach(btn => {
+      const match = isPrimary && ((btn.dataset.taxSort === 'most' && taxSortDir === -1) || (btn.dataset.taxSort === 'least' && taxSortDir === 1));
+      btn.classList.toggle('active', match);
+    });
+    return;
+  }
+  const isPrimary = valSortCol === 'realValue';
+  document.querySelectorAll('[data-value-sort]').forEach(btn => {
+    const match = isPrimary && ((btn.dataset.valueSort === 'best' && valSortDir === -1) || (btn.dataset.valueSort === 'worst' && valSortDir === 1));
+    btn.classList.toggle('active', match);
+  });
+}
+
+function updateTaxRankingHeading(){
+  const kicker = $('taxRankKicker');
+  const title = $('taxRankTitle');
+  const subtitle = $('taxRankSubtitle');
+  if(!kicker || !title || !subtitle) return;
+  const losingLeast = taxSortCol === 'totalLost' && taxSortDir === 1;
+  kicker.textContent = losingLeast ? 'Ranking 1 · Lowest taxes' : 'Ranking 1 · Highest taxes';
+  title.innerHTML = (losingLeast ? 'Where winners lose the least to tax' : 'Where winners lose the most to tax') + ' <button type="button" class="info-dot" data-info="tax-rank" aria-label="About this ranking">i</button>';
+  subtitle.textContent = losingLeast
+    ? 'Each state ranked by total tax lost on a $200M jackpot, from least lost to most lost.'
+    : 'Each state ranked by total tax lost on a $200M jackpot.';
+  syncLegacySortButtons('tax');
+}
+
+function updateValueRankingHeading(){
+  const kicker = $('valueRankKicker');
+  const title = $('valueRankTitle');
+  const subtitle = $('valueRankSubtitle');
+  if(!kicker || !title || !subtitle) return;
+  const leastFar = valSortCol === 'realValue' && valSortDir === 1;
+  kicker.textContent = leastFar ? 'Ranking 2 · Lowest buying power' : 'Ranking 2 · Highest buying power';
+  title.innerHTML = (leastFar ? 'Where your money goes the least far' : 'Where your money goes furthest') + ' <button type="button" class="info-dot" data-info="value-rank" aria-label="About this ranking">i</button>';
+  subtitle.textContent = leastFar
+    ? 'Take-home re-ranked by local cost of living, from weakest buying power to strongest.'
+    : 'Take-home re-ranked by local cost of living.';
+  syncLegacySortButtons('value');
+}
+
+function getRankExportMeta(type){
+  if(type === 'value'){
+    const leastFar = valSortCol === 'realValue' && valSortDir === 1;
+    return leastFar
+      ? {
+          title:'Where your money goes the least far',
+          kicker:'RANKING 2 · LOWEST BUYING POWER',
+          subtitle:'Top 10 states in the active Buying Power view, ranked from weakest buying power to strongest after local cost of living is applied.',
+          filename:'vegasinsider-lowest-buying-power-top-10'
+        }
+      : {
+          title:'Where your money goes furthest',
+          kicker:'RANKING 2 · HIGHEST BUYING POWER',
+          subtitle:'Top 10 states in the active Buying Power view, based on after-tax take-home adjusted by local cost of living.',
+          filename:'vegasinsider-highest-buying-power-top-10'
+        };
+  }
+  const losingLeast = taxSortCol === 'totalLost' && taxSortDir === 1;
+  return losingLeast
+    ? {
+        title:'Where winners lose the least to tax',
+        kicker:'RANKING 1 · LOWEST TAXES',
+        subtitle:'Top 10 states in the active Highest Taxes view, ranked from least tax lost to most tax lost on a $200M advertised jackpot.',
+        filename:'vegasinsider-lowest-taxes-top-10'
+      }
+    : {
+        title:'Where winners lose the most to tax',
+        kicker:'RANKING 1 · HIGHEST TAXES',
+        subtitle:'Top 10 states in the active Highest Taxes view, based on total federal and state tax lost on a $200M advertised jackpot.',
+        filename:'vegasinsider-highest-taxes-top-10'
+      };
+}
+
+
 function animateRankingBars(scope){
   const root = typeof scope === 'string' ? document.querySelector(scope) : scope;
   if(!root) return;
@@ -1862,6 +2048,7 @@ function animateRankingBars(scope){
 }
 
 function renderTaxRanking() {
+  updateTaxRankingHeading();
   const tbody = $('taxRankingBody');
   if (!tbody) return;
   const current = stateSel ? stateSel.value : '';
@@ -1917,6 +2104,7 @@ function renderTaxRanking() {
 let valSortCol = 'realValue'; let valSortDir = -1;
 
 function renderValueRanking() {
+  updateValueRankingHeading();
   const tbody = $('valueRankingBody');
   if (!tbody) return;
   const current = stateSel ? stateSel.value : '';
@@ -2058,7 +2246,279 @@ function initStudyTabs() {
   });
 }
 
+
+// ── Ranking export: active view, current sort, top 10 only ─────────────────
+function getActiveRankView(){
+  const active = document.querySelector('[data-rank-sub].active');
+  return active && active.dataset.rankSub === 'value' ? 'value' : 'tax';
+}
+
+function sortedStudyRowsForExport(type){
+  const all = studyRows();
+  const isValue = type === 'value';
+  const col = isValue ? valSortCol : taxSortCol;
+  const dir = isValue ? valSortDir : taxSortDir;
+  const taxFns = {
+    state:(r)=>r.state, totalLost:(r)=>r.totalLost, fed:(r)=>r.fed, stx:(r)=>r.stx,
+    rentYrs:(r)=>r.totalLost/r.rent, childYrs:(r)=>r.totalLost/r.childcare,
+    degreeYrs:(r)=>r.totalLost/r.degreeCost, salaryYrs:(r)=>r.totalLost/r.income
+  };
+  const valFns = {
+    state:(r)=>r.state, realValue:(r)=>r.realValue, keep:(r)=>r.keep, col:(r)=>r.col,
+    homes:(r)=>r.keep/r.home, acres:(r)=>r.keep/r.land,
+    yearsNoWork:(r)=>r.keep/r.annualSpend, stx:(r)=>r.stx
+  };
+  const fns = isValue ? valFns : taxFns;
+  const fn = fns[col] || (isValue ? valFns.realValue : taxFns.totalLost);
+  return [...all].sort((a,b)=>{
+    const av = fn(a), bv = fn(b);
+    return typeof av === 'string' ? av.localeCompare(bv) * dir : (av - bv) * dir;
+  });
+}
+
+function exportRowsConfig(type){
+  const meta = getRankExportMeta(type);
+  if(type === 'value'){
+    return {
+      ...meta,
+      columns:[
+        {key:'rank', label:'#', fmt:(r,i)=>String(i+1), width:70, align:'center'},
+        {key:'state', label:'State', fmt:r=>r.state, width:260, align:'left'},
+        {key:'realValue', label:'Buying power', fmt:r=>fmtMillions(r.realValue), width:220, align:'right'},
+        {key:'keep', label:'Take-home', fmt:r=>fmtMillions(r.keep), width:200, align:'right'},
+        {key:'col', label:'COL index', fmt:r=>String(r.col), width:150, align:'center'},
+        {key:'homes', label:'Homes', fmt:r=>fmtWhole(r.keep/r.home), width:130, align:'right'},
+        {key:'acres', label:'Acres', fmt:r=>fmtWhole(r.keep/r.land), width:150, align:'right'},
+        {key:'yearsNoWork', label:'Years', fmt:r=>fmtWhole(r.keep/r.annualSpend), width:130, align:'right'},
+        {key:'stx', label:'State tax', fmt:r=>r.stx>0?fmtMillions(r.stx):'$0', width:180, align:'right'}
+      ]
+    };
+  }
+  return {
+    ...meta,
+    columns:[
+      {key:'rank', label:'#', fmt:(r,i)=>String(i+1), width:70, align:'center'},
+      {key:'state', label:'State', fmt:r=>r.state, width:260, align:'left'},
+      {key:'totalLost', label:'Total lost', fmt:r=>fmtMillions(r.totalLost), width:220, align:'right'},
+      {key:'fed', label:'Federal', fmt:r=>fmtMillions(r.fed), width:200, align:'right'},
+      {key:'stx', label:'State tax', fmt:r=>r.stx>0?fmtMillions(r.stx):'$0', width:180, align:'right'},
+      {key:'rentYrs', label:'Rent yrs', fmt:r=>fmtWhole(r.totalLost/r.rent), width:140, align:'right'},
+      {key:'childYrs', label:'Childcare yrs', fmt:r=>fmtWhole(r.totalLost/r.childcare), width:180, align:'right'},
+      {key:'degreeYrs', label:'4-yr degrees', fmt:r=>fmtWhole(r.totalLost/r.degreeCost), width:180, align:'right'},
+      {key:'salaryYrs', label:'Salary yrs', fmt:r=>fmtWhole(r.totalLost/r.income), width:160, align:'right'}
+    ]
+  };
+}
+
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 500);
+}
+
+function csvEscape(v){
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+
+function downloadRankCsv(){
+  const type = getActiveRankView();
+  const cfg = exportRowsConfig(type);
+  const rows = sortedStudyRowsForExport(type).slice(0,10);
+  const header = cfg.columns.map(c=>csvEscape(c.label)).join(',');
+  const body = rows.map((r,i)=>cfg.columns.map(c=>csvEscape(c.fmt(r,i))).join(',')).join('\n');
+  const note = 'Source: VegasInsider analysis. $200M advertised jackpot baseline; cash option and tax estimates used for editorial comparison.';
+  const csv = header + '\n' + body + '\n\n' + csvEscape(note) + '\n';
+  downloadBlob(new Blob([csv], {type:'text/csv;charset=utf-8'}), cfg.filename + '.csv');
+}
+
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight){
+  const words = String(text).split(/\s+/);
+  let line = '', yy = y;
+  for(const word of words){
+    const test = line ? line + ' ' + word : word;
+    if(ctx.measureText(test).width > maxWidth && line){
+      ctx.fillText(line, x, yy);
+      line = word;
+      yy += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  if(line) ctx.fillText(line, x, yy);
+  return yy;
+}
+
+function fillCellText(ctx, text, x, y, w, align, color, font){
+  ctx.font = font;
+  ctx.fillStyle = color;
+  ctx.textAlign = align === 'right' ? 'right' : align === 'center' ? 'center' : 'left';
+  ctx.textBaseline = 'middle';
+  const pad = 18;
+  const tx = align === 'right' ? x + w - pad : align === 'center' ? x + w / 2 : x + pad;
+  ctx.fillText(String(text), tx, y);
+}
+
+function downloadRankImage(){
+  const type = getActiveRankView();
+  const cfg = exportRowsConfig(type);
+  const rows = sortedStudyRowsForExport(type).slice(0,10);
+  const W = 1800, H = 880, scale = 2;
+  const canvas = document.createElement('canvas');
+  canvas.width = W * scale;
+  canvas.height = H * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+
+  // Palette
+  const black = '#000000', ink = '#101820', muted = '#5e6670', gold = '#e7aa31', cream = '#fff3d4', cream2 = '#fff8e7', border = '#dedede', orange = '#ba6710';
+
+  // Background + outer card
+  ctx.fillStyle = '#f4f4f4'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(48,48,W-96,H-96);
+  ctx.fillStyle = black; ctx.fillRect(48,48,W-96,8);
+  ctx.fillStyle = gold; ctx.fillRect(48,48,530,8);
+
+  // Header
+  ctx.fillStyle = gold; ctx.fillRect(80,88,8,92);
+  ctx.font = '900 24px Poppins, Arial, sans-serif';
+  ctx.fillStyle = orange;
+  ctx.letterSpacing = '0px';
+  ctx.fillText(cfg.kicker, 110, 108);
+  ctx.font = '900 44px Poppins, Arial, sans-serif';
+  ctx.fillStyle = ink;
+  ctx.fillText(cfg.title, 110, 154);
+  ctx.font = '700 19px Poppins, Arial, sans-serif';
+  ctx.fillStyle = muted;
+  drawWrappedText(ctx, cfg.subtitle, 110, 190, 1160, 25);
+
+  // Brand pill — tighter text-only wordmark, styled closer to the reference
+  function drawSpacedText(ctx, str, x, y, spacing){
+    let cx = x;
+    for(const ch of str){
+      ctx.fillText(ch, cx, y);
+      cx += ctx.measureText(ch).width + spacing;
+    }
+  }
+
+  const brandText = 'VEGASINSIDER';
+  const brandFont = '900 23px Poppins, Arial, sans-serif';
+  const brandSpacing = 0.9;
+  const brandPadX = 18;
+  const brandH = 58;
+  ctx.font = brandFont;
+  const rawBrandWidth = Array.from(brandText).reduce((sum, ch) => sum + ctx.measureText(ch).width, 0) + (brandText.length - 1) * brandSpacing;
+  const brandW = Math.ceil(rawBrandWidth + brandPadX * 2);
+  const brandX = W - 130 - brandW;
+  const brandY = 88;
+
+  ctx.fillStyle = black; ctx.fillRect(brandX, brandY, brandW, brandH);
+  ctx.fillStyle = gold; ctx.fillRect(brandX, brandY + brandH - 4, brandW, 4);
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  const brandTextX = brandX + brandPadX;
+  const brandTextY = brandY + 28;
+
+  // Light shadow keeps the text crisp on the black background.
+  ctx.font = brandFont;
+  ctx.fillStyle = 'rgba(0,0,0,.35)';
+  drawSpacedText(ctx, brandText, brandTextX + 1, brandTextY + 1, brandSpacing);
+  ctx.fillStyle = '#ffffff';
+  drawSpacedText(ctx, brandText, brandTextX, brandTextY, brandSpacing);
+
+
+  // Table layout
+  const left = 80, top = 250;
+  const tableW = W - 160;
+  const headerH = 50, rowH = 52;
+  const cols = cfg.columns;
+  const naturalW = cols.reduce((a,c)=>a+c.width,0);
+  const widths = cols.map(c=>c.width * tableW / naturalW);
+
+  // Header row
+  ctx.fillStyle = black; ctx.fillRect(left, top, tableW, headerH);
+  ctx.fillStyle = gold; ctx.fillRect(left, top + headerH - 5, tableW, 5);
+  let x = left;
+  cols.forEach((c, idx)=>{
+    if(idx){ ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fillRect(x, top, 1, headerH); }
+    fillCellText(ctx, c.label.toUpperCase(), x, top + headerH/2 - 2, widths[idx], c.align, '#ffffff', '900 15px Poppins, Arial, sans-serif');
+    x += widths[idx];
+  });
+
+  // Data rows
+  const maxPrimary = type === 'value' ? Math.max(...rows.map(r=>r.realValue)) : Math.max(...rows.map(r=>r.totalLost));
+  rows.forEach((r, i)=>{
+    const y = top + headerH + i * rowH;
+    ctx.fillStyle = i % 2 ? '#ffffff' : '#fffdf7';
+    ctx.fillRect(left, y, tableW, rowH);
+    ctx.fillStyle = border; ctx.fillRect(left, y + rowH - 1, tableW, 1);
+
+    // Subtle heat cell on primary metric
+    const primaryCol = type === 'value' ? 2 : 2;
+    const primaryX = left + widths.slice(0, primaryCol).reduce((a,b)=>a+b,0);
+    const primaryW = widths[primaryCol];
+    const primaryVal = type === 'value' ? r.realValue : r.totalLost;
+    const pct = maxPrimary > 0 ? primaryVal / maxPrimary : 0;
+    ctx.fillStyle = i === 0 ? gold : cream;
+    ctx.globalAlpha = i === 0 ? 1 : Math.max(.25, pct * .65);
+    ctx.fillRect(primaryX, y, primaryW, rowH);
+    ctx.globalAlpha = 1;
+
+    x = left;
+    cols.forEach((c, idx)=>{
+      if(idx){ ctx.fillStyle = '#eeeeee'; ctx.fillRect(x, y, 1, rowH); }
+      const value = c.fmt(r,i);
+      const isPrimary = idx === 2;
+      const isMoney = ['totalLost','fed','stx','realValue','keep'].includes(c.key);
+      const color = isPrimary ? ink : isMoney ? (c.key === 'keep' ? '#248447' : orange) : idx <= 1 ? ink : muted;
+      const font = idx === 1 || isPrimary ? '900 20px Poppins, Arial, sans-serif' : isMoney ? '900 18px ui-monospace, SFMono-Regular, Menlo, monospace' : '800 18px Poppins, Arial, sans-serif';
+      fillCellText(ctx, value, x, y + rowH/2, widths[idx], c.align, color, font);
+      x += widths[idx];
+    });
+  });
+
+  // Footer note
+  const footY = top + headerH + rows.length * rowH + 44;
+  ctx.fillStyle = cream2; ctx.fillRect(80, footY-28, tableW, 68);
+  ctx.fillStyle = gold; ctx.fillRect(80, footY-28, 8, 68);
+  ctx.font = '800 16px Poppins, Arial, sans-serif'; ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  drawWrappedText(ctx, 'Source: VegasInsider analysis. Top 10 reflects the active table view and current sort. Based on a $200M advertised jackpot baseline; figures are estimates and not tax advice.', 108, footY, tableW - 56, 22);
+
+  canvas.toBlob(blob => {
+    if(blob) downloadBlob(blob, cfg.filename + '.png');
+  }, 'image/png');
+}
+
+function initRankExport(){
+  const toggle = document.getElementById('rankExportToggle');
+  const menu = document.getElementById('rankExportMenu');
+  if(!toggle || !menu) return;
+  const close = () => { menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); };
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !menu.classList.contains('open');
+    menu.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  menu.addEventListener('click', e => {
+    const btn = e.target.closest('[data-export-rank]');
+    if(!btn) return;
+    close();
+    if(btn.dataset.exportRank === 'image') downloadRankImage();
+    else downloadRankCsv();
+  });
+  document.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+}
+
 initStudyTabs();
+initRankExport();
 
 calc();
 renderStudyRankings();
